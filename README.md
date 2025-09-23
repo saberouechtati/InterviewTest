@@ -116,5 +116,40 @@ This section details the step-by-step changes made to the application, the ratio
     *   Helps in achieving the "Refactor for maintainability" goal (Goal 3) by structuring the application logic cleanly.
 
 ---
+
+### Step 5: Create ViewModel and UI State - `presentation` layer
+
+*   **What was done:**
+    *   Created `com.betsson.interviewtest.presentation.oddslist.OddsListUiState.kt`:
+        *   `OddsListUiState` data class: Holds the overall UI state (`isLoading: Boolean`, `odds: List<OddItemUiModel>`, `error: String?`).
+        *   `OddItemUiModel` data class: Represents a single item for UI display (`id`, `name`, `sellInText`, `oddsValueText`, `imageUrl`). This allows formatting data specifically for the UI.
+        *   An extension function `Odd.toOddItemUiModel()` to map from the domain model to the UI model.
+    *   Created `com.betsson.interviewtest.presentation.oddslist.OddsListViewModel.kt`. Its key responsibilities and internal workings include:
+        *   **Dependencies:** Takes `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase` as constructor parameters.
+        *   **State Management:**
+            *   `_uiState (MutableStateFlow)`: Privately holds the mutable current state of the UI (`OddsListUiState`).
+            *   `uiState (StateFlow)`: Publicly exposes an immutable stream of `OddsListUiState` for the UI to observe.
+        *   **Initialization (`init` block):**
+            *   Calls `observeOdds()` to immediately start listening for odds data when the ViewModel is created.
+        *   **Observing Data (`observeOdds()` method):**
+            *   Invokes `getSortedOddsStreamUseCase()` to get the `Flow<List<Odd>>`.
+            *   Uses `.onEach` to process each emission from the flow:
+                *   Maps domain `Odd` objects to `OddItemUiModel`.
+                *   Updates `_uiState` with the new list, sets `isLoading` to `false`, and clears any previous `error`.
+            *   Uses `.catch` to handle potential errors from the data stream, updating `_uiState` with an error message.
+            *   Uses `.launchIn(viewModelScope)` to ensure the flow collection is tied to the ViewModel's lifecycle, preventing leaks.
+        *   **Handling User Actions (`onUpdateOddsClicked()` method):**
+            *   Called in response to a user interaction (e.g., button click).
+            *   Sets `isLoading` to `true` in `_uiState` to provide user feedback.
+            *   Launches a coroutine to call `triggerOddsUpdateUseCase()`.
+            *   Includes `try-catch` for error handling during the update operation. The changes from the update are expected to be picked up by the `observeOdds()` flow.
+*   **Why & Benefits (Task Goals Addressed):**
+    *   MVVM Pattern & Separation of Concerns: ...
+    *   ... (other benefits) ...
+
+---
+
+
+
 *(README will be updated as more steps are completed)*
     
