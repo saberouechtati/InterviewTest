@@ -101,5 +101,20 @@ This section details the step-by-step changes made to the application, the ratio
     *   **Data Transformation:** Manages the conversion between raw data source models (`Bet`) and the application's domain models (`Odd`).
 
 ---
+
+### Step 4: Define Use Cases - `domain` layer
+
+*   **What was done:**
+    *   Created two use case classes in the `com.betsson.interviewtest.domain.usecase` package:
+        *   `GetSortedOddsStreamUseCase(oddsRepository: OddsRepository)`: Provides an `invoke()` operator that returns the `Flow<List<Odd>>` from the repository. This stream is expected to contain odds sorted by `sellIn`.
+        *   `TriggerOddsUpdateUseCase(oddsRepository: OddsRepository)`: Provides a `suspend operator fun invoke()` that calls `oddsRepository.triggerOddsUpdate()` to initiate the odds calculation process.
+*   **Why & Benefits (Task Goals Addressed):**
+    *   **Clean Architecture & Single Responsibility:** Use cases encapsulate specific pieces of business logic/application-specific actions. They act as intermediaries between the Presentation layer (ViewModels) and the Data layer (Repositories).
+    *   **Improved Readability & Maintainability:** Clearly defines the available operations in the domain. If the logic for getting or updating odds becomes more complex (e.g., involving multiple repositories or additional business rules before/after fetching data), that complexity would reside within the use case, keeping ViewModels cleaner.
+    *   **Testability:** Use cases can be unit tested independently by mocking the repository they depend on.
+    *   **Reusability:** These actions are now defined in a way that could be reused by different ViewModels or even other entry points into the domain logic (e.g., background services) if needed.
+    *   Helps in achieving the "Refactor for maintainability" goal (Goal 3) by structuring the application logic cleanly.
+
+---
 *(README will be updated as more steps are completed)*
     
