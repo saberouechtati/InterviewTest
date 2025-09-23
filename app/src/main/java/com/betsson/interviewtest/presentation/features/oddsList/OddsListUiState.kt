@@ -1,4 +1,4 @@
-package com.betsson.interviewtest.presentation.oddslist
+package com.betsson.interviewtest.presentation.features.oddsList
 
 import com.betsson.interviewtest.domain.model.Odd // For the mapper function
 

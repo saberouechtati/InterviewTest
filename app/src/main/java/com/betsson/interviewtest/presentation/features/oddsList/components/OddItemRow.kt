@@ -1,4 +1,4 @@
-package com.betsson.interviewtest.presentation.oddslist.components
+package com.betsson.interviewtest.presentation.features.oddsList.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.betsson.interviewtest.R
-import com.betsson.interviewtest.presentation.oddslist.OddItemUiModel
+import com.betsson.interviewtest.presentation.features.oddsList.OddItemUiModel
 
 @Composable
 fun OddItemRow(
