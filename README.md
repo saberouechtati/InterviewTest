@@ -187,7 +187,44 @@ This section details the step-by-step changes made to the application, the ratio
 
 ---
 
+### Step 6: Create Composable UI - `presentation` layer
 
+*   **What was done:**
+    *   **Added Coil Dependency:** Integrated the Coil library for efficient image loading from URLs in Jetpack Compose.
+    *   **`OddItemRow.kt` Composable:**
+        *   Created a reusable Composable to display a single odd item.
+        *   Uses `Card` for item structure and elevation.
+        *   Displays `name`, `sellInText`, `oddsValueText`, and an image loaded via Coil's `AsyncImage`.
+        *   `AsyncImage` is configured with placeholder and error drawables.
+        *   Item dimensions are controlled using modifiers (`padding`, `size`) to prevent them from taking full screen width/height, addressing a key UI requirement.
+    *   **`OddsListScreen.kt` Composable:**
+        *   The main screen Composable that takes `OddsListViewModel` as a parameter.
+        *   Observes `viewModel.uiState.collectAsState()` to reactively update the UI.
+        *   Uses `Scaffold` for a standard Material Design layout including a `TopAppBar`.
+        *   Delegates content display to a separate `OddsListContent` Composable.
+    *   **`OddsListContent.kt` Composable (within `OddsListScreen.kt`):**
+        *   Contains a "Update Odds" `Button` that calls `viewModel.onUpdateOddsClicked()`. The button's enabled state is tied to `uiState.isLoading`.
+        *   Manages UI display based on `uiState`:
+            *   Shows a `CircularProgressIndicator` during initial loading or list updates.
+            *   Displays error messages if `uiState.error` is not null.
+            *   Shows an empty state message if no odds are available.
+            *   Uses `LazyColumn` to efficiently display the list of `OddItemRow`s. The `key` parameter in `items` is used for better performance during list updates.
+        *   Includes `@Preview` Composable functions for `OddItemRow` and different states of `OddsListContent` to facilitate UI development and testing.
+*   **Why & Benefits (Task Goals Addressed):**
+    *   **Modern UI with Jetpack Compose (Goal 3: Modern Design Pattern):** Built the entire UI using Jetpack Compose, a declarative UI toolkit, leading to more concise and maintainable UI code.
+    *   **Reactive UI (Goal 2: List Refresh):** The UI automatically updates when the `uiState` in the `OddsListViewModel` changes, thanks to `collectAsState()`.
+    *   **Addressed Specific UI Requirements (Goal 1):**
+        *   **Item Sizing:** `OddItemRow` is designed not to take full width/height.
+        *   **Complete Information Display:** All required fields (`name`, `sellIn`, `oddsValue`, `image`) are now displayed for each item.
+        *   **Image Loading:** Images are fetched from URLs and displayed.
+    *   **Improved User Experience (Goal 1, Goal 2):**
+        *   Clear visual feedback for loading states and error conditions.
+        *   The "Update Odds" button provides the user with direct control to refresh the data.
+    *   **Component Reusability:** `OddItemRow` is a reusable component.
+    *   **Efficient List Display:** `LazyColumn` ensures that only visible items are composed and rendered, which is crucial for performance with potentially long lists.
+    *   **Developer Productivity with Previews:** `@Preview` annotations allow for quick iteration and visualization of UI components in Android Studio without needing to run the app on a device/emulator for every small change.
+
+---
 
 
 *(README will be updated as more steps are completed)*
