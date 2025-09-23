@@ -29,6 +29,28 @@ The primary objectives of this refactoring are:
 *   **(Planned) Koin:** For dependency injection.
 *   **(Planned) Coil:** For image loading.
 
+## Build System Enhancements
+
+Before diving deep into application code refactoring, foundational improvements were made to the project's build system.
+
+*   **What was done:**
+    *   **Migrated Gradle Build Scripts from Groovy to Kotlin DSL:**
+        *   All `build.gradle` files (project-level and app-level) were renamed to `build.gradle.kts`.
+        *   The syntax was updated to Kotlin, leveraging its type safety and better IDE support.
+    *   **Upgraded Dependencies and Gradle Plugins:**
+        *   The Android Gradle Plugin (AGP), Kotlin Gradle Plugin, and various library dependencies (AndroidX, Compose, Coroutines, etc.) were updated to their recent stable versions.
+        *   (Optional, but good to mention if you did it) Implemented a **Version Catalog (`libs.versions.toml`)** to centralize and manage dependency versions and plugin aliases, making the `build.gradle.kts` files cleaner and version management more robust.
+    *   **Ensured Compatibility:** Verified compatibility between the updated AGP, Kotlin version, and the Jetpack Compose Compiler extension version.
+*   **Why & Benefits (Task Goals Addressed):**
+    *   **Improved Maintainability & Readability (Goal 3):**
+        *   **Kotlin DSL:** Provides type safety, leading to earlier error detection during build script development. Offers significantly better IDE auto-completion, navigation, and refactoring capabilities compared to Groovy, especially for developers already familiar with Kotlin.
+        *   **Version Catalog:** Centralizes dependency versions, reducing redundancy, preventing version conflicts, and making updates easier across multiple modules (if the project grows).
+    *   **Enhanced Build Reliability & Performance:**
+        *   Using up-to-date Gradle plugins and dependencies often brings performance improvements, bug fixes, and access to the latest features.
+    *   **Modern Development Practices (Goal 3):** Aligning the build system with modern Android development standards, where Kotlin DSL and Version Catalogs are increasingly common.
+    *   **Better Developer Experience:** The improved IDE support for Kotlin DSL makes working with build files less error-prone and more efficient.
+    *   **Foundation for Future Growth:** A clean and modern build setup makes it easier to add new modules, libraries, or build configurations as the project evolves.
+
 ## Refactoring Steps & Decisions
 
 This section details the step-by-step changes made to the application, the rationale behind them, and how they contribute to the project goals.
