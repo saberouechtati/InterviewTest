@@ -226,6 +226,48 @@ This section details the step-by-step changes made to the application, the ratio
 
 ---
 
+### Step 7: Finalize UI Integration, Theming, System UI & Network Access
+
+*   **Status:** Complete
+
+#### What was done:
+
+*   **`MainActivity` Final Integration & Refinement:**
+    *   Ensured `MainActivity.kt` (now located in `presentation/MainActivity.kt`) correctly uses `setContent` to host the main Composable UI (`AppMainTheme` wrapping `OddsListScreen`).
+    *   Applied the newly defined `AppMainTheme` at the root of the Composable tree within `MainActivity`'s `setContent` block.
+    *   Verified that `OddsListViewModel` is correctly provided to `OddsListScreen` using `by viewModels()` with the `OddsListViewModelFactory` for proper lifecycle management and dependency provision.
+
+*   **`AndroidManifest.xml` Updates:**
+    *   Updated the `android:name` attribute for the `<activity>` tag corresponding to `MainActivity` to reflect its new package path: `.presentation.MainActivity`.
+    *   **Added the `<uses-permission android:name="android.permission.INTERNET" />` permission.** This is essential for enabling network operations, such as fetching images from URLs using the Coil library for display in `OddItemRow`.
+
+*   **Material 3 Theming Setup:**
+    *   Created and configured standard theme files (`Color.kt`, `Theme.kt`, `Type.kt`) within the `presentation/theme` package.
+    *   Defined distinct `LightColorScheme` and `DarkColorScheme` using custom application colors, supporting both light and dark modes.
+    *   Integrated dynamic color theming for Android 12+ devices.
+
+*   **System UI Modernization (Status Bar in `Theme.kt`):**
+    *   Replaced deprecated `window.statusBarColor` access with modern `WindowCompat` APIs.
+    *   Enabled edge-to-edge display using `WindowCompat.setDecorFitsSystemWindows(window, false)`.
+    *   Implemented dynamic setting of status bar icon colors using `WindowCompat.getInsetsController().isAppearanceLightStatusBars`.
+    *   Verified `Scaffold` and `TopAppBar` correctly handle system insets.
+
+#### Why & Benefits (Task Goals Addressed):
+
+*   **Enable Core App Functionality (Addresses Goal 3 - Modern Design Pattern, implicitly all goals):**
+    *   The `INTERNET` permission is fundamental for image loading from network sources (via Coil), which is a key feature of the odds display. Without it, images would fail to load.
+*   **Correct Application Functionality & Structure (Addresses all Goals implicitly):**
+    *   Updating `AndroidManifest.xml` for `MainActivity`'s location and necessary permissions is critical for the app to launch and function correctly.
+*   **Enhance Visual Appeal & User Experience (Addresses Goal 3 - Modern Design Pattern):**
+    *   Displaying images alongside odds data significantly enhances the UI.
+    *   Material 3 theming and edge-to-edge display provide a modern, polished user interface.
+*   **Adherence to Best Practices & Future-Proofing (Addresses Goal 1 - Maintainability, Goal 3 - Modern Design Pattern):**
+    *   Using `WindowCompat` for system UI styling is the current Android best practice.
+    *   Explicitly declaring necessary permissions is a fundamental aspect of Android development.
+
+
+---
+
 
 *(README will be updated as more steps are completed)*
     
