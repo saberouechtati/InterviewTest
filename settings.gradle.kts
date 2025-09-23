@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "InterviewTest"
-include ':app'
+include (":app")
