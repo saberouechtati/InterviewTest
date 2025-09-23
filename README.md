@@ -143,33 +143,50 @@ This section details the step-by-step changes made to the application, the ratio
 
 *   **What was done:**
     *   Created `com.betsson.interviewtest.presentation.oddslist.OddsListUiState.kt`:
-        *   `OddsListUiState` data class: Holds the overall UI state (`isLoading: Boolean`, `odds: List<OddItemUiModel>`, `error: String?`).
-        *   `OddItemUiModel` data class: Represents a single item for UI display (`id`, `name`, `sellInText`, `oddsValueText`, `imageUrl`). This allows formatting data specifically for the UI.
-        *   An extension function `Odd.toOddItemUiModel()` to map from the domain model to the UI model.
+        *   `OddsListUiState` data class: Defines the complete, observable state for the odds list screen. It includes `isLoading` (Boolean for loading indicators), `odds` (a list of `OddItemUiModel` for display), and `error` (a nullable String for presenting error messages to the user).
+        *   `OddItemUiModel` data class: Tailored specifically for UI representation, this model (`id`, `name`, `sellInText`, `oddsValueText`, `imageUrl`) ensures that data is formatted and structured exactly as the UI components require. For example, `sellInText` and `oddsValueText` can be pre-formatted strings.
+        *   An extension function `Odd.toOddItemUiModel()`: Provides a clean and reusable way to map the `domain.model.Odd` objects to the UI-specific `OddItemUiModel`, decoupling the UI representation from the core domain logic.
     *   Created `com.betsson.interviewtest.presentation.oddslist.OddsListViewModel.kt`. Its key responsibilities and internal workings include:
-        *   **Dependencies:** Takes `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase` as constructor parameters.
+        *   **Dependencies:** Takes `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase` as constructor parameters. This adheres to dependency inversion, making the ViewModel testable and its dependencies explicit.
         *   **State Management:**
-            *   `_uiState (MutableStateFlow)`: Privately holds the mutable current state of the UI (`OddsListUiState`).
-            *   `uiState (StateFlow)`: Publicly exposes an immutable stream of `OddsListUiState` for the UI to observe.
+            *   `_uiState (MutableStateFlow)`: Privately holds the mutable current UI state (`OddsListUiState`). This is the single source of truth for the screen's state within the ViewModel.
+            *   `uiState (StateFlow)`: Publicly exposes an immutable stream of `OddsListUiState`. UI components (Composables) will collect this flow to reactively update based on state changes.
         *   **Initialization (`init` block):**
-            *   Calls `observeOdds()` to immediately start listening for odds data when the ViewModel is created.
+            *   Calls `observeOdds()` immediately upon ViewModel creation. This ensures that the ViewModel starts loading and observing odds data as soon as it's instantiated, making data available to the UI quickly.
         *   **Observing Data (`observeOdds()` method):**
-            *   Invokes `getSortedOddsStreamUseCase()` to get the `Flow<List<Odd>>`.
-            *   Uses `.onEach` to process each emission from the flow:
-                *   Maps domain `Odd` objects to `OddItemUiModel`.
-                *   Updates `_uiState` with the new list, sets `isLoading` to `false`, and clears any previous `error`.
-            *   Uses `.catch` to handle potential errors from the data stream, updating `_uiState` with an error message.
-            *   Uses `.launchIn(viewModelScope)` to ensure the flow collection is tied to the ViewModel's lifecycle, preventing leaks.
+            *   Invokes `getSortedOddsStreamUseCase()` to obtain a `Flow<List<Odd>>` from the domain layer.
+            *   Uses `.onEach` to process each new list of domain odds emitted by the flow:
+                *   Maps domain `Odd` objects to `OddItemUiModel` using the defined mapper function.
+                *   Updates `_uiState` with the new list of UI models, sets `isLoading` to `false` (as data is now available), and clears any pre-existing `error` messages.
+            *   Uses `.catch` to gracefully handle any exceptions that might occur within the upstream flow (e.g., from the repository), updating `_uiState` with an appropriate error message and setting `isLoading` to `false`.
+            *   Uses `.launchIn(viewModelScope)` to collect the flow within a coroutine that is automatically managed by the ViewModel's lifecycle. This prevents resource leaks by cancelling the collection when the ViewModel is cleared.
         *   **Handling User Actions (`onUpdateOddsClicked()` method):**
-            *   Called in response to a user interaction (e.g., button click).
-            *   Sets `isLoading` to `true` in `_uiState` to provide user feedback.
-            *   Launches a coroutine to call `triggerOddsUpdateUseCase()`.
-            *   Includes `try-catch` for error handling during the update operation. The changes from the update are expected to be picked up by the `observeOdds()` flow.
+            *   This public function is invoked by the UI in response to a user interaction (e.g., clicking an "Update Odds" button).
+            *   It sets `isLoading` to `true` in `_uiState` to provide immediate visual feedback to the user that an operation is in progress.
+            *   Launches a new coroutine in `viewModelScope` to asynchronously call `triggerOddsUpdateUseCase()`, which in turn updates the odds in the repository.
+            *   Includes `try-catch` block for robust error handling during the update operation. If an error occurs, `_uiState` is updated with the error message and `isLoading` is set to `false`.
+            *   The subsequent data changes resulting from `triggerOddsUpdateUseCase` will be automatically picked up by the ongoing `observeOdds()` flow, which will then update the UI.
+
 *   **Why & Benefits (Task Goals Addressed):**
-    *   MVVM Pattern & Separation of Concerns: ...
-    *   ... (other benefits) ...
+    *   **MVVM Pattern & Separation of Concerns (Goal 3: Maintainability, Modern Design Pattern):**
+        *   The ViewModel acts as the mediator between the UI (View) and the business logic (Model/Use Cases). It prepares and manages data for the UI, keeping the UI layer simple and focused on rendering.
+        *   This clear separation makes the codebase easier to understand, modify, and test. UI logic is distinct from business logic.
+    *   **Lifecycle Awareness & Resource Management (Goal 3: Maintainability):**
+        *   By extending `androidx.lifecycle.ViewModel` and using `viewModelScope`, operations are automatically tied to the UI component's lifecycle. This prevents memory leaks and ensures that asynchronous operations are cancelled when the UI is no longer active.
+    *   **Reactive UI Updates (Goal 2: List Refresh, Goal 3: Modern Design Pattern):**
+        *   The use of `StateFlow` to expose `OddsListUiState` allows the Jetpack Compose UI to observe state changes reactively. When the state in the ViewModel updates, the UI will automatically and efficiently recompose only the necessary parts.
+    *   **Testability (Goal 3: Maintainability, Goal 4: Testing):**
+        *   ViewModels are significantly easier to unit test. Dependencies (UseCases) are injected and can be easily mocked, allowing for isolated testing of the ViewModel's logic and state transformations without needing an Android device or UI instrumentation.
+    *   **Data Transformation & UI-Specific Models (Goal 1: Display all info, Goal 3: Clean Code):**
+        *   `OddItemUiModel` and the mapping function allow data to be formatted and structured specifically for the UI's needs (e.g., "Sell In: 10" instead of just `10`). This keeps the domain model clean and focused on business entities, while the UI model caters to presentation details.
+        *   This helps in displaying all required information (`sellIn`, `oddsValue`, `image`, `name`) as per the task requirements.
+    *   **Centralized UI Logic (Goal 3: Maintainability):**
+        *   All logic related to managing the state of the odds list screen (loading, error handling, data observation, user action responses) is centralized within the `OddsListViewModel`. This makes it the single source of truth for UI state, simplifying debugging and feature development.
+    *   **Improved User Experience through State Management (Goal 2, Goal 3):**
+        *   Explicitly managing `isLoading` and `error` states allows the UI to provide better feedback to the user (e.g., showing loading spinners, error messages), leading to a more robust and user-friendly application.
 
 ---
+
 
 
 
