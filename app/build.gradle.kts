@@ -78,8 +78,8 @@ dependencies {
 
     implementation(libs.androidx.activity.compose)
 
-    // TODO: Later add Image Loading (Coil)
-    // implementation(libs.coil.compose) // For later
+    // Image Loading (Coil)
+    implementation(libs.coil.compose)
 
     // TODO: Later add Dependency Injection (Koin)
     // implementation(libs.koin.android) // For later
