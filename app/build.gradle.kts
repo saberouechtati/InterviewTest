@@ -74,6 +74,11 @@ dependencies {
     implementation(libs.androidx.compose.uiGraphics)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.uiToolingPreview)
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
@@ -87,6 +92,11 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.androidx.arch.core.testing)
+
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

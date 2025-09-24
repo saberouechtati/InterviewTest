@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.betsson.interviewtest.R
-import com.betsson.interviewtest.presentation.features.oddsList.OddItemUiModel
+import com.betsson.interviewtest.domain.model.OddItemUiModel
 
 @Composable
 fun OddItemRow(

@@ -1,8 +1,10 @@
 package com.betsson.interviewtest.presentation.features.oddsList
 
+
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.betsson.interviewtest.domain.model.toOddItemUiModel
 import com.betsson.interviewtest.domain.usecase.GetSortedOddsStreamUseCase
 import com.betsson.interviewtest.domain.usecase.TriggerOddsUpdateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,12 +13,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
-const val TAG_ODDS_VIEW_MODEL = "OddsViewModelBetsson"
 
 @HiltViewModel
 class OddsListViewModel @Inject constructor(
@@ -31,45 +32,43 @@ class OddsListViewModel @Inject constructor(
         observeOdds()
     }
 
+    // Simplified observeOdds
     private fun observeOdds() {
-        viewModelScope.launch {
-            try {
-                getSortedOddsStreamUseCase()
-                    .onStart {
-                        _uiState.update { it.copy(isLoading = true, error = null) } // Set loading on start
-                    }
-                    .onEach { domainOdds ->
-                        try {
-                            val uiModels = domainOdds.map { it.toOddItemUiModel() }
-                            _uiState.update { currentState ->
-                                currentState.copy(
-                                    isLoading = false,
-                                    odds = uiModels,
-                                    error = null
-                                )
-                            }
-                        } catch (e: Exception) {
-                            _uiState.update { it.copy(isLoading = false, error = "Error processing data: ${e.message}") }
-                        }
-                    }
-                    .catch { exception ->
-                        _uiState.update { currentState ->
-                            currentState.copy(
-                                isLoading = false,
-                                error = "Data stream error: ${exception.message}"
-                            )
-                        }
-                    }
-                    .collect {
-                        // This terminal collector might not be strictly necessary if onEach is doing all the work,
-                        // but it ensures the flow is actively collected.
-                        Log.d(TAG_ODDS_VIEW_MODEL, "observeOdds.collect: Terminal collect (flow is active)")
-                    }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, error = "Critical ViewModel error: ${e.message}") }
+        getSortedOddsStreamUseCase() // From test: flow { emit(problematicDomainOdds) }
+            .onStart {
+                println("VIEWMODEL_LIFECYCLE - onStart called. isLoading=true") // ADD LOG
+                _uiState.update { it.copy(isLoading = true, error = null) } // EMISSION 1
             }
-        }
+            .onEach { domainOdds -> // problematicDomainOdds is received here
+                println("VIEWMODEL_LIFECYCLE - onEach called with data.") // ADD LOG
+                try {
+                    println("VIEWMODEL_LIFECYCLE - onEach: Attempting to map...") // ADD LOG
+                    val uiModels = domainOdds.map { it.toOddItemUiModel() } // EXPECTED TO THROW EXCEPTION
+                    println("VIEWMODEL_LIFECYCLE - onEach: Mapping SUCCESSFUL (problem!)") // ADD LOG - Should NOT see this
+                    _uiState.update { currentState ->
+                        currentState.copy(isLoading = false, odds = uiModels, error = null)
+                    }
+                } catch (e: Exception) { // Mapping exception SHOULD BE CAUGHT HERE
+                    println("VIEWMODEL_LIFECYCLE - onEach: CATCH BLOCK ENTERED for mapping error! Message: ${e.message}") // ADD LOG
+                    _uiState.update { currentState -> // POTENTIAL EMISSION 2
+                        println("VIEWMODEL_LIFECYCLE - onEach CATCH: Updating state. isLoading=false, error=${e.message}") // ADD LOG
+                        currentState.copy(
+                            isLoading = false,
+                            odds = emptyList(), // Or currentState.odds
+                            error = "Error processing data: ${e.message}"
+                        )
+                    }
+                }
+            }
+            .catch { exception -> // Outer catch
+                println("VIEWMODEL_LIFECYCLE - OUTER CATCH BLOCK ENTERED! Message: ${exception.message}") // ADD LOG
+                _uiState.update { currentState ->
+                    currentState.copy(isLoading = false, error = "Data stream error: ${exception.message}")
+                }
+            }
+            .launchIn(viewModelScope)
     }
+
 
     fun onUpdateOddsClicked() {
          _uiState.update { it.copy(isLoading = true, error = null) }

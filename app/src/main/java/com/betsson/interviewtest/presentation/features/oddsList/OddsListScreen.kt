@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.betsson.interviewtest.domain.model.OddItemUiModel
 import com.betsson.interviewtest.presentation.features.oddsList.components.OddItemRow
 
 @OptIn(ExperimentalMaterial3Api::class) // For TopAppBar
