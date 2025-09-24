@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.betsson.interviewtest.domain.usecase.GetSortedOddsStreamUseCase
 import com.betsson.interviewtest.domain.usecase.TriggerOddsUpdateUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +18,8 @@ import kotlinx.coroutines.launch
 
 const val TAG_ODDS_VIEW_MODEL = "OddsViewModelBetsson"
 
-class OddsListViewModel(
+@HiltViewModel
+class OddsListViewModel @Inject constructor(
     private val getSortedOddsStreamUseCase: GetSortedOddsStreamUseCase,
     private val triggerOddsUpdateUseCase: TriggerOddsUpdateUseCase
 ) : ViewModel() {

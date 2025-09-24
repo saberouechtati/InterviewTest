@@ -18,7 +18,8 @@ lifecycle = "2.9.4"
 composeBom = "2025.09.00"
 activityCompose = "1.11.0"
 materialVersion = "1.13.0"
-coil = "2.6.0"
+coil = "2.7.0"
+hilt = "2.57.1"
 
 
 [libraries]
@@ -42,6 +43,8 @@ androidx-compose-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling
 androidx-compose-uiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version = "1.3.0" } # Example: direct version
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.7.0" }
@@ -53,6 +56,7 @@ android-application = { id = "com.android.application", version.ref = "androidGr
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "composeCompiler" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 [bundles]
 # Optional: group common dependencies

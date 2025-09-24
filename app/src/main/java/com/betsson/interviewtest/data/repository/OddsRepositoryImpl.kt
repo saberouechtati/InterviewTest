@@ -3,11 +3,12 @@ package com.betsson.interviewtest.data.repository
 import android.util.Log
 import com.betsson.interviewtest.data.dto.Bet
 import com.betsson.interviewtest.data.logic.OddsLogicProcessor
+import com.betsson.interviewtest.di.IoDispatcher
 import com.betsson.interviewtest.domain.model.Odd
 import com.betsson.interviewtest.domain.repository.OddsRepository
+import jakarta.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,9 +21,9 @@ import java.util.UUID
 
 const val TAG_ODDS_REPOSITORY = "OddsRepoBetsson" // Define a tag
 
-class OddsRepositoryImpl(
+class OddsRepositoryImpl @Inject constructor(
     private val oddsLogicProcessor: OddsLogicProcessor,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : OddsRepository {
 
     private val repositoryScope = CoroutineScope(SupervisorJob() + defaultDispatcher)

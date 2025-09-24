@@ -11,38 +11,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.betsson.interviewtest.data.logic.OddsLogicProcessor
-import com.betsson.interviewtest.data.repository.OddsRepositoryImpl
-import com.betsson.interviewtest.domain.usecase.GetSortedOddsStreamUseCase
-import com.betsson.interviewtest.domain.usecase.TriggerOddsUpdateUseCase
-import com.betsson.interviewtest.presentation.factories.OddsListViewModelFactory
 import com.betsson.interviewtest.presentation.features.oddsList.OddsListScreen
 import com.betsson.interviewtest.presentation.features.oddsList.OddsListViewModel
-import com.betsson.interviewtest.presentation.theme.InterviewTestTheme // Make sure this path is correct
-import kotlinx.coroutines.Dispatchers
+import com.betsson.interviewtest.presentation.theme.InterviewTestTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    private val oddsLogicProcessor: OddsLogicProcessor by lazy {
-        OddsLogicProcessor()
-    }
-    private val oddsRepository: OddsRepositoryImpl by lazy {
-        OddsRepositoryImpl(
-            oddsLogicProcessor = oddsLogicProcessor,
-            defaultDispatcher = Dispatchers.IO
-        )
-    }
-    private val getSortedOddsStreamUseCase: GetSortedOddsStreamUseCase by lazy {
-        GetSortedOddsStreamUseCase(oddsRepository)
-    }
-    private val triggerOddsUpdateUseCase: TriggerOddsUpdateUseCase by lazy {
-        TriggerOddsUpdateUseCase(oddsRepository)
-    }
-
-    private val oddsListViewModel: OddsListViewModel by viewModels {
-        OddsListViewModelFactory(getSortedOddsStreamUseCase, triggerOddsUpdateUseCase)
-    }
+    private val oddsListViewModel: OddsListViewModel by viewModels ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
