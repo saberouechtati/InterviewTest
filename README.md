@@ -265,6 +265,53 @@ This section details the step-by-step changes made to the application, the ratio
     *   Using `WindowCompat` for system UI styling is the current Android best practice.
     *   Explicitly declaring necessary permissions is a fundamental aspect of Android development.
 
+---
+
+### Step 8: Implement Dependency Injection with Hilt
+
+*   **Status:** Complete
+
+#### What was done:
+
+*   **Hilt Setup & Configuration:**
+    *   Added Hilt dependencies (`hilt-android`, `hilt-compiler`) to the project using the `libs.versions.toml` version catalog and updated module/project `build.gradle.kts` files to apply the Hilt Gradle plugin and `kotlin-kapt`.
+    *   Created a custom `Application` class (`InterviewTestApplication.kt`) and annotated it with `@HiltAndroidApp`.
+    *   Updated `AndroidManifest.xml` to use the custom `InterviewTestApplication` class.
+
+*   **Hilt Module Creation:**
+    *   **`AppModule.kt`**: Created to provide application-level dependencies.
+        *   Provides `OddsLogicProcessor` as a `@Singleton`.
+    *   **`RepositoryModule.kt`**: Created to handle repository bindings.
+        *   Uses `@Binds` to provide `OddsRepositoryImpl` for the `OddsRepository` interface, scoped as a `@Singleton`.
+    *   **`UseCaseModule.kt`**: Created to provide use case instances.
+        *   Provides `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase` as `@Singleton`s, injecting `OddsRepository`.
+    *   **`DispatchersModule.kt`**: Created to provide `CoroutineDispatcher`s.
+        *   Defines `@IoDispatcher` and `@DefaultDispatcher` custom qualifiers.
+        *   Provides `Dispatchers.IO` (as `@IoDispatcher`) and `Dispatchers.Default` (as `@DefaultDispatcher`).
+
+*   **Component & ViewModel Injection:**
+    *   Annotated `OddsRepositoryImpl` and use case classes (`GetSortedOddsStreamUseCase`, `TriggerOddsUpdateUseCase`) with `@Inject` on their constructors to allow Hilt to create their instances and manage their dependencies (like `OddsLogicProcessor`, qualified `CoroutineDispatcher`s, and `OddsRepository`).
+    *   Annotated `OddsListViewModel` with `@HiltViewModel` and used `@Inject` on its constructor to receive `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase`.
+    *   Annotated `MainActivity` with `@AndroidEntryPoint` to enable Hilt to inject dependencies, including the `OddsListViewModel`.
+    *   Updated `MainActivity` to retrieve `OddsListViewModel` using the standard `by viewModels()` delegate, removing the need for a custom factory.
+
+*   **Cleanup:**
+    *   Removed the manually created `OddsListViewModelFactory.kt` as Hilt now handles ViewModel instantiation.
+
+#### Why & Benefits (Task Goals Addressed):
+
+*   **Improved Code Maintainability & Scalability (Addresses Goal 1 - Maintainability):**
+    *   Hilt centralizes dependency creation and management, making it easier to understand how components are wired together and simpler to add or modify dependencies as the app grows.
+    *   Reduces boilerplate code associated with manual dependency injection (e.g., factories).
+*   **Enhanced Testability (Addresses Goal 1 - Maintainability, Goal 2 - Testability):**
+    *   Decouples classes from the concrete implementations of their dependencies, making it significantly easier to provide mock or fake dependencies in unit tests. This is crucial for testing ViewModels, repositories, and use cases in isolation.
+*   **Adherence to Modern Android Development Practices (Addresses Goal 3 - Modern Design Pattern):**
+    *   Dependency Injection is a fundamental design pattern, and Hilt is Google's recommended DI framework for Android, aligning the project with current best practices.
+*   **Lifecycle Awareness (Implicit with Hilt ViewModels):**
+    *   Hilt's integration with Android Architecture Components (like ViewModels) provides proper scoping and lifecycle management for injected dependencies within these components.
+*   **Reduced Risk of Errors:**
+    *   Automating dependency provision reduces the chance of errors that can occur with manual DI, such as providing the wrong dependency or forgetting to provide one.
+
 
 ---
 
