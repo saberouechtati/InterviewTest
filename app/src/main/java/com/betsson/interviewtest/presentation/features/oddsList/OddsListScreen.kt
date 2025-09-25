@@ -30,6 +30,10 @@ import androidx.compose.ui.unit.dp
 import com.betsson.interviewtest.domain.model.OddItemUiModel
 import com.betsson.interviewtest.presentation.features.oddsList.components.OddItemRow
 
+private const val NETWORK_CONNECTION_FAILED = "Network connection failed"
+private const val UPDATE_ODDS = "Update Odds"
+private const val NO_ODDS_AVAILABLE_AT_THE_MOMENT_ = "No odds available at the moment."
+
 @OptIn(ExperimentalMaterial3Api::class) // For TopAppBar
 @Composable
 fun OddsListScreen(
@@ -74,7 +78,7 @@ fun OddsListContent(
                 .padding(vertical = 16.dp),
             enabled = !uiState.isLoading // Disable button while loading
         ) {
-            Text("Update Odds")
+            Text(UPDATE_ODDS)
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -88,6 +92,7 @@ fun OddsListContent(
                     CircularProgressIndicator()
                 }
             }
+
             uiState.error != null -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -100,18 +105,25 @@ fun OddsListContent(
                     )
                 }
             }
+
             uiState.odds.isEmpty() && !uiState.isLoading -> {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("No odds available at the moment.")
+                    Text(NO_ODDS_AVAILABLE_AT_THE_MOMENT_)
                 }
             }
+
             else -> {
                 // Show a small loader on top of the list if updating
                 if (uiState.isLoading && uiState.odds.isNotEmpty()) {
-                    Box(modifier = Modifier.fillMaxWidth().padding(8.dp), contentAlignment = Alignment.Center) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
                         CircularProgressIndicator(modifier = Modifier.size(24.dp))
                     }
                 }
@@ -150,7 +162,7 @@ fun OddsListContentPreview_Loading() {
 fun OddsListContentPreview_Error() {
     MaterialTheme {
         OddsListContent(
-            uiState = OddsListUiState(error = "Network connection failed"),
+            uiState = OddsListUiState(error = NETWORK_CONNECTION_FAILED),
             onUpdateClick = {}
         )
     }

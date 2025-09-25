@@ -3,17 +3,19 @@ androidGradlePlugin = "8.13.0"
 appcompatVersion = "1.7.1"
 constraintlayout = "2.2.1"
 coreKtxVersion = "1.17.0"
+junitJupiterParams = "5.13.4"
 kotlin = "2.2.20"
 composeCompiler = "2.2.20"
 coreKtx = "1.17.0"
 appcompat = "1.7.1"
 kotlinxCoroutinesAndroid = "1.10.2"
 kotlinxCoroutinesCore = "1.10.2"
+kotlinxCoroutinesTestVersion = "1.7.3"
 lifecycleRuntimeKtx = "2.9.4"
 lifecycleViewmodelCompose = "2.9.4"
 lifecycleViewmodelKtx = "2.9.4"
 material = "1.13.0"
-coroutines = "1.10.2"
+kotlinxCoroutines = "1.10.2"
 lifecycle = "2.9.4"
 composeBom = "2025.09.00"
 activityCompose = "1.11.0"
@@ -22,23 +24,25 @@ coil = "2.7.0"
 hilt = "2.57.1"
 
 junit = "4.13.2"
-kotlinxCoroutinesTest = "1.10.2"
+mockitoAndroid = "5.20.0"
+mockitoCore = "5.20.0"
+mockitoInline = "5.2.0"
+mockitoKotlin = "5.2.0"
+mockitoVersion = "5.2.1"
 mockk = "1.14.5"
 turbine = "1.2.1"
 androidxArchCoreTesting = "2.2.0"
-junitVersion = "4.12"
-junitJupiter = "5.8.1"
+junitVersion = "4.13.2"
+junitJupiter = "5.13.4"
+uiTestManifest = "1.9.1"
 
 
 [libraries]
-# Define your libraries here, e.g.:
 androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
-androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifest" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 google-material = { group = "com.google.android.material", name = "material", version.ref = "material"}
-kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 androidx-lifecycle-runtimeKtx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewModelKtx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
@@ -48,15 +52,21 @@ androidx-compose-uiGraphics = { group = "androidx.compose.ui", name = "ui-graphi
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-uiToolingPreview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-uiTooling = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-compose-uiTestManifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
 # Testing - Unit Tests
-junit = { group = "junit", name = "junit", version.ref = "junit" }
-kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+
+mockito-android = { group = "org.mockito", name ="mockito-android", version.ref = "mockitoAndroid" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockitoCore" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockitoInline" }
+mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockitoVersion" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
 mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 androidx-arch-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "androidxArchCoreTesting" }

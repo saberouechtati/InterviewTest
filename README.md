@@ -26,8 +26,8 @@ The primary objectives of this refactoring are:
 *   **MVVM (Model-View-ViewModel):** As the presentation layer pattern.
 *   **Kotlin Coroutines & Flow:** For asynchronous operations and reactive data streams.
 *   **Git & GitHub:** For version control and tracking changes.
-*   **(Planned) Koin:** For dependency injection.
-*   **(Planned) Coil:** For image loading.
+*   **Hilt:** For dependency injection.
+*   **Coil:** For image loading.
 
 ## Build System Enhancements
 
@@ -191,11 +191,10 @@ This section details the step-by-step changes made to the application, the ratio
 
 *   **What was done:**
     *   **Added Coil Dependency:** Integrated the Coil library for efficient image loading from URLs in Jetpack Compose.
-    *   **`OddItemRow.kt` Composable:**
-        *   Created a reusable Composable to display a single odd item.
+    *   **`OddItemRow.kt` Composable:***   Created a reusable Composable to display a single odd item.
         *   Uses `Card` for item structure and elevation.
         *   Displays `name`, `sellInText`, `oddsValueText`, and an image loaded via Coil's `AsyncImage`.
-        *   `AsyncImage` is configured with placeholder and error drawables.
+        *   `AsyncImage` is configured with placeholder and error drawables. Coil's default memory and disk caching mechanisms are utilized.
         *   Item dimensions are controlled using modifiers (`padding`, `size`) to prevent them from taking full screen width/height, addressing a key UI requirement.
     *   **`OddsListScreen.kt` Composable:**
         *   The main screen Composable that takes `OddsListViewModel` as a parameter.
@@ -217,6 +216,12 @@ This section details the step-by-step changes made to the application, the ratio
         *   **Item Sizing:** `OddItemRow` is designed not to take full width/height.
         *   **Complete Information Display:** All required fields (`name`, `sellIn`, `oddsValue`, `image`) are now displayed for each item.
         *   **Image Loading:** Images are fetched from URLs and displayed.
+            *   **Efficient Caching with Coil:** This is achieved using the [Coil (Coroutine Image Loader)](https://coil-kt.github.io/coil/) library. Coil provides an automatic and efficient multi-layered caching mechanism (memory and disk caches) out-of-the-box.
+                *   **Benefits of Coil's Caching:**
+                    *   **Improved Performance:** Frequently accessed images are loaded quickly from memory or disk, reducing wait times and providing a smoother user experience.
+                    *   **Reduced Network Usage:** By caching images, the app minimizes redundant network requests, saving users' data and reducing server load.
+                    *   **Offline Support (Basic):** Images previously loaded and cached on disk can often be displayed even when the device is temporarily offline (depending on cache validity and server cache headers).
+                    *   **Optimized Resource Management:** Coil manages image decoding and memory allocation efficiently.
     *   **Improved User Experience (Goal 1, Goal 2):**
         *   Clear visual feedback for loading states and error conditions.
         *   The "Update Odds" button provides the user with direct control to refresh the data.
@@ -225,6 +230,7 @@ This section details the step-by-step changes made to the application, the ratio
     *   **Developer Productivity with Previews:** `@Preview` annotations allow for quick iteration and visualization of UI components in Android Studio without needing to run the app on a device/emulator for every small change.
 
 ---
+
 
 ### Step 7: Finalize UI Integration, Theming, System UI & Network Access
 
@@ -312,6 +318,103 @@ This section details the step-by-step changes made to the application, the ratio
 *   **Reduced Risk of Errors:**
     *   Automating dependency provision reduces the chance of errors that can occur with manual DI, such as providing the wrong dependency or forgetting to provide one.
 
+---
+
+### Step 9: Unit Testing & Focused UI Test for `OddItemRow`
+
+*   **What was done:**
+    ***Unit Testing (`test` source set):**
+    *   Implemented unit tests for key components:
+    *   **`OddsListViewModelTest.kt`:** Tested ViewModel logic, including state updates in response to `triggerOddsUpdate()` calls, initial data loading effects, and handling of different results from the repository/use case. Used Mockito for mocking dependencies like `OddsRepository` or use cases.
+    *   **`OddsRepositoryImplTest.kt`:** Tested repository logic, such as data processing, interaction with `OddsLogicProcessor`, and how it updates its internal data flow. Mockito was used for dependencies like `OddsLogicProcessor` or data sources if any.
+    *   **`OddsLogicProcessorTest.kt`:** Tested the core business logic within the processor, verifying the correct transformation of `Odd` items based on the specified rules (e.g., how `sellIn` and `oddsValue` change).
+    *   Utilized Mockito (`mockito-core`, `mockito-kotlin`) for creating test doubles of dependencies.
+    *   Employed testing utilities like `kotlinx-coroutines-test` for managing coroutines in tests (`runTest`, `StandardTestDispatcher`).
+    *   **Focused UI Test for `OddItemRow` (`androidTest` source set):**
+        *   **`OddItemRowTest.kt`:** Created an instrumented UI test specifically for the `OddItemRow` Composable.
+            *   Used `@get:Rule val composeTestRule = createComposeRule()` to test this Composable in isolation.
+            *   Tests verify that `OddItemRow` correctly displays the provided `OddItemUiModel` data (name, sell-in, odds value).
+            *   Asserted the presence of UI elements and correct image loading requests (e.g., verifying that `AsyncImage` is present and its model is set).
+            *   Checked UI properties like content descriptions for accessibility.
+    *   **README.md Enhancements:**
+        *   Updated Step 6 in `README.md` to explicitly mention Coil's image caching mechanisms (memory and disk) and their benefits.
+    *   **Build Configuration:**
+        *   Ensured `build.gradle.kts` and `libs.versions.toml` were updated with necessary unit testing (`junit`, `mockito`) and AndroidX UI testing (`androidx.compose.ui:ui-test-junit4`) dependencies.
+    *   **Code Cleanup & Minor Refinements:**
+        *   Ensured logging tags and messages were consistent.
+        *   Renamed `TestData.kt` to `DataSource.kt` for clarity.
+
+*   **Why & Benefits (Task Goals Addressed):**
+    *   **Verification of Core Logic (Unit Tests - Goal 1, Goal 2, Goal 3):**
+        *   Unit tests provide confidence that the business logic in the ViewModel, Repository, and `OddsLogicProcessor` behaves as expected under various conditions.
+        *   Helps catch regressions early if logic is changed in the future.
+    *   **Verification of Individual UI Component (`OddItemRowTest` - Goal 1):**
+        *   Ensures the `OddItemRow` Composable correctly renders the data it's given and meets its specific UI requirements.
+    *   **Improved Code Quality & Maintainability (Goal 3):**
+        *   Writing tests encourages more modular and testable code design.
+        *   Tests serve as a form of documentation for how components are intended to behave.
+    *   **Documentation Clarity:** Enhancing the README with details about image caching provides better insight into the app's implementation details.
+    *   **Foundation for Broader UI Testing:** The setup for `OddItemRowTest` establishes a base for Android Compose UI testing, should more extensive UI tests be added later.
+
+---
+
+### Step 10: Testing the App, UI Verification & Coverage Review
+
+After implementing the core features and writing unit and focused UI tests, this step involves running all tests, manually testing the application on a device/emulator, visually verifying the UI, and reviewing code coverage to ensure quality and identify potential gaps.
+
+*   **What was done:**
+    *   **Executed All Unit Tests:** Ran the complete suite of unit tests (`./gradlew testDebugUnitTest`) to ensure all existing logic in ViewModels, Repositories, Use Cases, and helper classes passed successfully.
+    *   **Executed Instrumented UI Tests:** Ran the `OddItemRowTest` (and any other instrumented tests) on an emulator or physical device (`./gradlew connectedCheck` or via Android Studio run configurations) to verify individual Composable behavior.    *   **Manual End-to-End Testing & UI Verification:**
+        *   Installed and launched the application on a physical device and/or emulator.
+        *   The final UI of the main screen appears as follows:
+
+            ![Live Odds App Screenshot](docs/images/live_odds_screenshot.png)
+            *(Screenshot taken on Samsung SM-A336B)*
+
+        *   Manually navigated through the app's features, verifying against the visual output:
+            *   **Initial Display:**
+                *   Confirmed the "Live Odds" TopAppBar title is correctly displayed.
+                *   Observed the "Update Odds" button is present and prominent at the top.
+                *   Verified that a list of odd items loads and displays correctly, each showing:
+                    *   An image on the left.
+                    *   The odd's name (e.g., "First goal scorer").
+                    *   "Sell In:" value.
+                    *   "Odds:" value.
+                *   Confirmed items are displayed in `Card`s with appropriate padding and elevation, and do not take full screen width, matching the intended design.
+            *   **"Update Odds" Functionality:**
+                *   Clicked the "Update Odds" button.
+                *   Verified that the list data (Sell In & Odds values) updates according to the defined logic.
+                *   Observed any loading indicators during the update process.
+            *   **Image Loading:**
+                *   Checked that images corresponding to each odd item are loaded and displayed.
+                *   Tested placeholder image states by simulating network issues.
+            *   **List Scrolling:** Ensured the list scrolls smoothly if the number of items exceeds the screen height.
+            *   **General Responsiveness:** Checked for overall app responsiveness and absence of obvious visual glitches or crashes.
+    *   **Code Coverage Review:**
+        
+        ![Code coverage Screenshot](docs/images/code_coverage.png)    
+        *   Generated and reviewed the unit test code coverage report.
+        *   **Key Findings from Coverage:**
+            *   **High Coverage:** Excellent coverage (often 100% method/line) was achieved for critical logic and data classes:
+                *   `OddsListViewModel`
+                *   `OddsLogicProcessor`
+                *   Domain models (`Odd`, `OddItemUiModel`, `OddKt`, `OddType`, etc.)
+                *   DTOs (`Bet`)
+            *   **Good Coverage with Potential for Enhancement:**
+                *   `OddsRepositoryImpl`: Achieved high class (100%) and method (100%) coverage. Line coverage was good (e.g., ~87%), with branch coverage (e.g., ~50%) indicating opportunities to add more test cases for specific conditional paths or error handling scenarios.
+            *   **Expected Low/No *Unit Test* Coverage:**
+                *   UI Composables (`OddItemRow`, `OddsListScreen`): Tested via UI tests.
+                *   Theming files (`presentation.theme`): Declarative UI definitions.
+                *   DI Modules (`di.UseCaseModule`): Hilt modules tested implicitly.
+                *   Android Framework Components (`MainActivity`, `InterviewTestApplication`): Tested via UI tests or implicitly.
+        *   The review confirmed that core business logic is well-tested, with a note to potentially enhance `OddsRepositoryImpl` branch coverage in future iterations if deemed necessary.
+
+*   **Why & Benefits (Task Goals Addressed):**
+    *   **Ensuring Application Stability & Correctness (Goal 1, Goal 2):** Combining automated tests with manual testing and UI verification helps catch a wider range of issues.
+    *   **Validating Requirements & Design (Goal 1, Goal 2, Goal 3):** Manual testing and visual checks ensure that the implemented features meet specified requirements and design goals from a user's perspective.
+    *   **Identifying Test Gaps (Goal 3):** Code coverage reports highlight areas that might need additional automated tests.
+    *   **Building Confidence in Releases (Goal 3):** A thorough testing phase increases confidence in the application's quality.
+    *   **Iterative Improvement:** Feedback from testing and coverage analysis can inform future development.
 
 ---
 

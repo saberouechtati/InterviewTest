@@ -16,14 +16,15 @@ class OddsLogicProcessor {
 
         // "Number of fouls" specific thresholds and adjustments
         const val FOULS_SELL_IN_THRESHOLD_PRIMARY = 11 // Original: newSellIn < 11
-        const val FOULS_SELL_IN_THRESHOLD_SECONDARY = 6  // Original: newSellIn < 6
-        const val FOULS_ODDS_BONUS_INCREASE = 1      // The +1 adjustments for fouls
+        const val FOULS_SELL_IN_THRESHOLD_SECONDARY = 6 // Original: newSellIn < 6
+        const val FOULS_ODDS_BONUS_INCREASE = 1 // The +1 adjustments for fouls
 
         // SellIn passed threshold
         const val SELL_IN_PASSED_THRESHOLD = 0 // For checks like `newSellIn < 0`
 
         // "Total score" adjustments when sellIn passed
-        const val TOTAL_SCORE_ODDS_INCREASE_WHEN_SELL_IN_PASSED = 1 // The +1 for "Total score" if newSellIn < 0
+        const val TOTAL_SCORE_ODDS_INCREASE_WHEN_SELL_IN_PASSED =
+            1 // The +1 for "Total score" if newSellIn < 0
 
     }
 
@@ -39,7 +40,8 @@ class OddsLogicProcessor {
             // Create a mutable copy to work with, as Odd's sellIn and oddsValue are var
             var newSellIn = currentOdd.sellIn
             var newOddsValue = currentOdd.oddsValue
-            val oddType = OddType.fromName(currentOdd.name) // 'name' in Odd corresponds to 'oddType' in old Bet
+            val oddType =
+                OddType.fromName(currentOdd.name) // 'name' in Odd corresponds to 'type' (odd type) in old Bet
 
             if (oddType !is OddType.TotalScore && oddType !is OddType.NumberOfFouls) {
                 if (newOddsValue > MIN_ODDS_VALUE_THRESHOLD) {

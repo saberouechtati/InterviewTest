@@ -36,17 +36,34 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# IntelliJ
+gitignore
+# IntelliJ / Android Studio
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
+.idea/caches/
 .idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
-# Android Studio 3 in .gitignore file.
-.idea/caches
+.idea/libraries/
 .idea/modules.xml
+.idea/workspace.xml # User-specific workspace settings
+.idea/tasks.xml     # User-specific tasks
+.idea/assetWizardSettings.xml # User-specific
+.idea/dictionaries/ # User-specific dictionaries
+.idea/navEditor.xml # User-specific navigation editor state
+.idea/deploymentTargetSelector.xml # User-specific deployment target
+
+# Potentially ignore if they cause issues, but often safe to commit:
+# .idea/compiler.xml
+# .idea/misc.xml
+# .idea/AndroidProjectSystem.xml
+# .idea/migrations.xml
+# .idea/copyright/
+# .idea/encodings.xml
+# .idea/vcs.xml
+
+# Keep these if you want to share them:
+# .idea/codeStyles/
+# .idea/inspectionProfiles/
+# .idea/runConfigurations/
+
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 .idea/navEditor.xml
 

@@ -3,9 +3,9 @@ package com.betsson.interviewtest.data.repository
 import android.util.Log
 import com.betsson.interviewtest.data.dto.Bet
 import com.betsson.interviewtest.data.logic.OddsLogicProcessor
+import com.betsson.interviewtest.data.test.DataSource
 import com.betsson.interviewtest.di.IoDispatcher
 import com.betsson.interviewtest.domain.model.Odd
-import com.betsson.interviewtest.domain.model.OddType
 import com.betsson.interviewtest.domain.repository.OddsRepository
 import jakarta.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,12 +18,20 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-const val TAG_ODDS_REPOSITORY = "OddsRepoBetsson"
 
 class OddsRepositoryImpl @Inject constructor(
     private val oddsLogicProcessor: OddsLogicProcessor,
     @IoDispatcher private val defaultDispatcher: CoroutineDispatcher
 ) : OddsRepository {
+
+    companion object {
+        private const val TAG = "OddsRepositoryImpl" // Good practice for TAG
+        private const val ERROR_MSG_INITIAL_LOAD = "Error during initial data load"
+        private const val TRIGGER_ODDS_UPDATE_CURRENT_ODDS_LIST_IS_EMPTY_CANNOT_UPDATE =
+            "triggerOddsUpdate: Current odds list is empty, cannot update."
+        private const val TRIGGER_ODDS_UPDATE_ERROR_DURING_ODDS_UPDATE =
+            "triggerOddsUpdate: Error during odds update"
+    }
 
     private val repositoryScope = CoroutineScope(SupervisorJob() + defaultDispatcher)
     private val _oddsDataFlow = MutableStateFlow<List<Odd>>(emptyList())
@@ -33,7 +41,7 @@ class OddsRepositoryImpl @Inject constructor(
             try {
                 loadInitialData()
             } catch (e: Exception) {
-                Log.e(TAG_ODDS_REPOSITORY, "init: Error during initial data load", e)
+                Log.e(TAG, "$ERROR_MSG_INITIAL_LOAD. Details: ${e.message}", e)
                 // Optionally emit an error state or rethrow if your design requires it
             }
         }
@@ -43,15 +51,7 @@ class OddsRepositoryImpl @Inject constructor(
         return withContext(defaultDispatcher) {
             // Simulate network delay or heavy computation
             kotlinx.coroutines.delay(1000)
-            val items = listOf(
-                Bet(OddType.fromName("Winning team"), 10, 20, "https://i.imgur.com/mx66SBD.jpeg"),
-                Bet(OddType.fromName("Total score"), 2, 0, "https://i.imgur.com/VnPRqcv.jpeg"),
-                Bet(OddType.fromName("Player performance"), 5, 7, "https://i.imgur.com/Urpc00H.jpeg"),
-                Bet(OddType.fromName("First goal scorer"), 0, 80, "https://i.imgur.com/Wy94Tt7.jpeg"),
-                Bet(OddType.fromName("Number of fouls"), 5, 49, "https://i.imgur.com/NMLpcKj.jpeg"),
-                Bet(OddType.fromName("Corner kicks"), 3, 6, "https://i.imgur.com/TiJ8y5l.jpeg")
-            )
-            items
+            DataSource.createOddsList()
         }
     }
 
@@ -70,7 +70,7 @@ class OddsRepositoryImpl @Inject constructor(
             try {
                 val currentDomainOdds = _oddsDataFlow.value
                 if (currentDomainOdds.isEmpty()) {
-                    Log.w(TAG_ODDS_REPOSITORY, "triggerOddsUpdate: Current odds list is empty, cannot update.")
+                    Log.w(TAG, TRIGGER_ODDS_UPDATE_CURRENT_ODDS_LIST_IS_EMPTY_CANNOT_UPDATE)
                     return@withContext
                 }
 
@@ -78,7 +78,7 @@ class OddsRepositoryImpl @Inject constructor(
 
                 _oddsDataFlow.update { updatedDomainOdds.sortedBy { it.sellIn } }
             } catch (e: Exception) {
-                Log.e(TAG_ODDS_REPOSITORY, "triggerOddsUpdate: Error during odds update", e)
+                Log.e(TAG, TRIGGER_ODDS_UPDATE_ERROR_DURING_ODDS_UPDATE, e)
                 // Consider how to propagate this error if needed, e.g., through a specific error flow or result type
             }
         }

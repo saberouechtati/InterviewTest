@@ -6,8 +6,6 @@ import com.betsson.interviewtest.domain.usecase.TriggerOddsUpdateUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent // Or SingletonComponent if use cases are app-wide singletons
-import dagger.hilt.android.scopes.ViewModelScoped // Or @Singleton
 import dagger.hilt.components.SingletonComponent
 import jakarta.inject.Singleton
 

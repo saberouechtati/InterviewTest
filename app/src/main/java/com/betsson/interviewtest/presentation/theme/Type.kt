@@ -6,7 +6,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Replace with your app's font assets if you have them
 val AppFontFamily = FontFamily.Default // Using default system fonts
 
 // Set of Material typography styles to start with
@@ -43,7 +42,8 @@ val Typography = Typography(
     bodyMedium = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,                lineHeight = 20.sp,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
         letterSpacing = 0.25.sp
     )
 )

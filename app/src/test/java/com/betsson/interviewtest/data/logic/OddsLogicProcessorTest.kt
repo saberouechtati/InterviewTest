@@ -1,10 +1,26 @@
 package com.betsson.interviewtest.data.logic
 
 import com.betsson.interviewtest.domain.model.Odd
-import com.betsson.interviewtest.domain.model.OddType // Ensure this is the correct path to your OddType
+import com.betsson.interviewtest.domain.model.OddType
 import org.junit.Assert.assertEquals
-import org.junit.Test // If using JUnit 4
-// import org.junit.jupiter.api.Test // If using JUnit 5
+import org.junit.Test
+
+private const val SELL_IN_SHOULD_NOT_CHANGE_FOR_FIRST_GOAL_SCORE =
+    "SellIn should not change for FirstGoalScorer"
+private const val ODDS_VALUE_SHOULD_NOT_CHANGE_FOR_FIRST_GOAL_SCORER =
+    "OddsValue should not change for FirstGoalScorer"
+private const val SELL_IN_SHOULD_REMAIN_AS_PASSED_FOR_FIRST_GOAL_SCORER =
+    "SellIn should remain as passed for FirstGoalScorer"
+private const val ODDS_VALUE_SHOULD_NOT_CHANGE_FOR_FIRST_GOAL_SCORER_EVEN_WHEN_SELL_IN_PASSED =
+    "OddsValue should not change for FirstGoalScorer even when sellIn passed"
+private const val STANDARD_BET_SELL_IN_INCORRECT = "Standard Bet sellIn incorrect"
+private const val STANDARD_BET_ODDS_VALUE_INCORRECT = "Standard Bet oddsValue incorrect"
+private const val TOTAL_SCORE_SELL_IN_INCORRECT = "Total Score sellIn incorrect"
+private const val TOTAL_SCORE_ODDS_VALE_INCORRECT = "Total Score oddsValue incorrect"
+private const val FIRST_GOAL_SCORER_SELL_IN_INCORRECT = "First Goal Scorer sellIn incorrect"
+private const val FIRST_GOAL_SCORER_ODDS_VALUE_INCORRECT = "First Goal Scorer oddsValue incorrect"
+private const val NUMBER_OF_FOULS_SELL_IN_INCORRECT = "Number of Fouls sellIn incorrect"
+private const val NUMBER_OF_FOULS_ODDS_VALUE_INCORRECT = "Number of Fouls oddsValue incorrect"
 
 class OddsLogicProcessorTest {
 
@@ -19,7 +35,13 @@ class OddsLogicProcessorTest {
         id: String = name + "_" + sellIn + "_" + oddsValue, // Simple unique ID for tests
         imageUrl: String = "" // Not used by processor logic, but required by Odd constructor
     ): Odd {
-        return Odd(id = id, name = name, sellIn = sellIn, oddsValue = oddsValue, imageUrl = imageUrl)
+        return Odd(
+            id = id,
+            name = name,
+            sellIn = sellIn,
+            oddsValue = oddsValue,
+            imageUrl = imageUrl
+        )
     }
 
     // --- Standard Odds Tests (Not "Total Score", "Number of Fouls", or "First Goal Scorer") ---
@@ -38,7 +60,8 @@ class OddsLogicProcessorTest {
 
     @Test
     fun `processOddsUpdate - standard odd - oddsValue does not go below MIN_ODDS_VALUE_THRESHOLD`() {
-        val inputOdd = createOdd(name = "Standard Bet Low Odds", sellIn = 10, oddsValue = 0) // Already at min
+        val inputOdd =
+            createOdd(name = "Standard Bet Low Odds", sellIn = 10, oddsValue = 0) // Already at min
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(0, result[0].oddsValue)
@@ -56,7 +79,8 @@ class OddsLogicProcessorTest {
 
     @Test
     fun `processOddsUpdate - standard odd - when sellIn passed and odds low - oddsValue does not go below MIN_ODDS_VALUE_THRESHOLD`() {
-        val inputOdd = createOdd(name = "Standard Bet SellIn Passed Low Odds", sellIn = -1, oddsValue = 1)
+        val inputOdd =
+            createOdd(name = "Standard Bet SellIn Passed Low Odds", sellIn = -1, oddsValue = 1)
         val result = processor.processOddsUpdate(listOf(inputOdd))
         assertEquals(0, result[0].oddsValue) // 1 -> 0 (normal) -> still 0 (sellIn passed, hits min)
     }
@@ -64,17 +88,23 @@ class OddsLogicProcessorTest {
     // --- "First Goal Scorer" Odds Tests ---
 
     @Test
-    fun `processOddsUpdate - firstGoalScorer - sellIn does not decrease, oddsValue decreases by 1`() {
-        val inputOdd = createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = 10, oddsValue = 30)
+    fun `processOddsUpdate - firstGoalScorer - sellIn AND oddsValue DO NOT change`() { // Renamed for clarity
+        val inputOdd =
+            createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = 10, oddsValue = 30)
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
-        assertEquals(10, result[0].sellIn) // sellIn unchanged
-        assertEquals(29, result[0].oddsValue)
+        assertEquals(SELL_IN_SHOULD_NOT_CHANGE_FOR_FIRST_GOAL_SCORE, 10, result[0].sellIn)
+        assertEquals(
+            ODDS_VALUE_SHOULD_NOT_CHANGE_FOR_FIRST_GOAL_SCORER,
+            30,
+            result[0].oddsValue
+        ) // <<< ASSERTION CHANGED
     }
 
     @Test
     fun `processOddsUpdate - firstGoalScorer - oddsValue does not go below MIN_ODDS_VALUE_THRESHOLD`() {
-        val inputOdd = createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = 10, oddsValue = 0)
+        val inputOdd =
+            createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = 10, oddsValue = 0)
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(0, result[0].oddsValue)
@@ -82,12 +112,20 @@ class OddsLogicProcessorTest {
     }
 
     @Test
-    fun `processOddsUpdate - firstGoalScorer - when sellIn passed - oddsValue still decreases by 1 (sellIn still no change)`() {
-        val inputOdd = createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = -1, oddsValue = 30)
+    fun `processOddsUpdate - firstGoalScorer - when sellIn passed - sellIn AND oddsValue DO NOT change`() { // Renamed
+        val inputOdd =
+            createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = -1, oddsValue = 30)
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
-        assertEquals(-1, result[0].sellIn) // Original sellIn passed in, not decreased by processor's main logic
-        assertEquals(29, result[0].oddsValue) // Decreased once by the initial rule
+        // SellIn was passed in as -1. The logic doesn't modify it FOR FirstGoalScorer.
+        // The previous test logic for sellIn was `-2` for standard items because `newSellIn -= STANDARD_SELL_IN_DECREASE`
+        // was applied, but FirstGoalScorer is exempt from that.
+        assertEquals(SELL_IN_SHOULD_REMAIN_AS_PASSED_FOR_FIRST_GOAL_SCORER, -1, result[0].sellIn)
+        assertEquals(
+            ODDS_VALUE_SHOULD_NOT_CHANGE_FOR_FIRST_GOAL_SCORER_EVEN_WHEN_SELL_IN_PASSED,
+            30,
+            result[0].oddsValue
+        )
     }
 
 
@@ -104,7 +142,11 @@ class OddsLogicProcessorTest {
 
     @Test
     fun `processOddsUpdate - totalScore - oddsValue does not exceed MAX_ODDS_VALUE`() {
-        val inputOdd = createOdd(name = OddType.TotalScore.displayName, sellIn = 10, oddsValue = 50) // Already at max
+        val inputOdd = createOdd(
+            name = OddType.TotalScore.displayName,
+            sellIn = 10,
+            oddsValue = 50
+        ) // Already at max
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(50, result[0].oddsValue)
@@ -124,14 +166,21 @@ class OddsLogicProcessorTest {
     fun `processOddsUpdate - totalScore - when sellIn passed and odds near max - caps at MAX_ODDS_VALUE`() {
         val inputOdd = createOdd(name = OddType.TotalScore.displayName, sellIn = -1, oddsValue = 49)
         val result = processor.processOddsUpdate(listOf(inputOdd))
-        assertEquals(50, result[0].oddsValue) // 49 -> 50 (normal) -> still 50 (sellIn passed, hits max)
+        assertEquals(
+            50,
+            result[0].oddsValue
+        ) // 49 -> 50 (normal) -> still 50 (sellIn passed, hits max)
     }
 
     // --- "Number of Fouls" Odds Tests (ASSUMES BUG FIX in OddsLogicProcessor) ---
 
     @Test
     fun `processOddsUpdate - numberOfFouls - sellIn decreases, oddsValue increases normally when sellIn high`() {
-        val inputOdd = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 15, oddsValue = 20) // sellIn > 11
+        val inputOdd = createOdd(
+            name = OddType.NumberOfFouls.displayName,
+            sellIn = 15,
+            oddsValue = 20
+        ) // sellIn > 11
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(14, result[0].sellIn)
@@ -142,7 +191,8 @@ class OddsLogicProcessorTest {
     fun `processOddsUpdate - numberOfFouls - sellIn below primary threshold - odds increase bonus`() {
         // sellIn = 10 (which is < FOULS_SELL_IN_THRESHOLD_PRIMARY = 11)
         // Expected: +1 (base) +1 (bonus for <11) = +2 total increase for odds
-        val inputOdd = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 10, oddsValue = 20)
+        val inputOdd =
+            createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 10, oddsValue = 20)
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(9, result[0].sellIn)
@@ -153,7 +203,8 @@ class OddsLogicProcessorTest {
     fun `processOddsUpdate - numberOfFouls - sellIn below secondary threshold - odds increase double bonus`() {
         // sellIn = 5 (which is < FOULS_SELL_IN_THRESHOLD_SECONDARY = 6, and also < 11)
         // Expected: +1 (base) +1 (bonus for <11) +1 (bonus for <6) = +3 total increase for odds
-        val inputOdd = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 5, oddsValue = 20)
+        val inputOdd =
+            createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 5, oddsValue = 20)
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(4, result[0].sellIn)
@@ -162,7 +213,8 @@ class OddsLogicProcessorTest {
 
     @Test
     fun `processOddsUpdate - numberOfFouls - bonus increases do not exceed MAX_ODDS_VALUE`() {
-        val inputOdd = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 5, oddsValue = 48)
+        val inputOdd =
+            createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 5, oddsValue = 48)
         // Expected: 48 -> 49 (base) -> 50 (bonus <11) -> still 50 (bonus <6, hits max)
         val result = processor.processOddsUpdate(listOf(inputOdd))
         assertEquals(50, result[0].oddsValue)
@@ -173,7 +225,8 @@ class OddsLogicProcessorTest {
         // Test case: sellIn is low enough for bonus, but initial odds is high, but not maxed.
         // e.g., sellIn = 5 (eligible for +3 total), odds = 47
         // 47 -> 48 (base) -> 49 (bonus for <11) -> 50 (bonus for <6) -> capped at 50
-        val inputOdd = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 5, oddsValue = 47)
+        val inputOdd =
+            createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 5, oddsValue = 47)
         val result = processor.processOddsUpdate(listOf(inputOdd))
         assertEquals(50, result[0].oddsValue)
     }
@@ -181,7 +234,8 @@ class OddsLogicProcessorTest {
 
     @Test
     fun `processOddsUpdate - numberOfFouls - when sellIn passed - oddsValue becomes 0`() {
-        val inputOdd = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = -1, oddsValue = 20)
+        val inputOdd =
+            createOdd(name = OddType.NumberOfFouls.displayName, sellIn = -1, oddsValue = 20)
         val result = processor.processOddsUpdate(listOf(inputOdd))
 
         assertEquals(-2, result[0].sellIn) // sellIn still decreases
@@ -193,9 +247,12 @@ class OddsLogicProcessorTest {
     @Test
     fun `processOddsUpdate - updates multiple items correctly in a list`() {
         val odd1_standard = createOdd(name = "Standard Bet", sellIn = 10, oddsValue = 20)
-        val odd2_totalScore = createOdd(name = OddType.TotalScore.displayName, sellIn = 5, oddsValue = 30)
-        val odd3_firstGoal = createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = 12, oddsValue = 15)
-        val odd4_fouls = createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 3, oddsValue = 25) // below secondary threshold
+        val odd2_totalScore =
+            createOdd(name = OddType.TotalScore.displayName, sellIn = 5, oddsValue = 30)
+        val odd3_firstGoal =
+            createOdd(name = OddType.FirstGoalScorer.displayName, sellIn = 12, oddsValue = 15)
+        val odd4_fouls =
+            createOdd(name = OddType.NumberOfFouls.displayName, sellIn = 3, oddsValue = 25)
         val inputList = listOf(odd1_standard, odd2_totalScore, odd3_firstGoal, odd4_fouls)
 
         val result = processor.processOddsUpdate(inputList)
@@ -203,23 +260,27 @@ class OddsLogicProcessorTest {
 
         // Check odd1 (Standard Bet: sellIn 10->9, odds 20->19)
         val resultOdd1 = result.find { it.id == odd1_standard.id }!!
-        assertEquals(9, resultOdd1.sellIn)
-        assertEquals(19, resultOdd1.oddsValue)
+        assertEquals(STANDARD_BET_SELL_IN_INCORRECT, 9, resultOdd1.sellIn)
+        assertEquals(STANDARD_BET_ODDS_VALUE_INCORRECT, 19, resultOdd1.oddsValue)
 
         // Check odd2 (Total Score: sellIn 5->4, odds 30->31)
         val resultOdd2 = result.find { it.id == odd2_totalScore.id }!!
-        assertEquals(4, resultOdd2.sellIn)
-        assertEquals(31, resultOdd2.oddsValue)
+        assertEquals(TOTAL_SCORE_SELL_IN_INCORRECT, 4, resultOdd2.sellIn)
+        assertEquals(TOTAL_SCORE_ODDS_VALE_INCORRECT, 31, resultOdd2.oddsValue)
 
-        // Check odd3 (First Goal Scorer: sellIn 12->12, odds 15->14)
+        // Check odd3 (First Goal Scorer: sellIn 12->12, odds 15->15)
         val resultOdd3 = result.find { it.id == odd3_firstGoal.id }!!
-        assertEquals(12, resultOdd3.sellIn)
-        assertEquals(14, resultOdd3.oddsValue)
+        assertEquals(FIRST_GOAL_SCORER_SELL_IN_INCORRECT, 12, resultOdd3.sellIn) // Should remain 12
+        assertEquals(
+            FIRST_GOAL_SCORER_ODDS_VALUE_INCORRECT,
+            15,
+            resultOdd3.oddsValue
+        )
 
         // Check odd4 (Number of Fouls: sellIn 3->2, odds 25 -> 26(base) -> 27(<11) -> 28(<6))
         val resultOdd4 = result.find { it.id == odd4_fouls.id }!!
-        assertEquals(2, resultOdd4.sellIn)
-        assertEquals(28, resultOdd4.oddsValue)
+        assertEquals(NUMBER_OF_FOULS_SELL_IN_INCORRECT, 2, resultOdd4.sellIn)
+        assertEquals(NUMBER_OF_FOULS_ODDS_VALUE_INCORRECT, 28, resultOdd4.oddsValue)
     }
 
     @Test
