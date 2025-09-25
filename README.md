@@ -418,6 +418,16 @@ After implementing the core features and writing unit and focused UI tests, this
 
 ---
 
+## Development Environment
+
+This project was primarily developed and tested using:
+
+*   **Android Studio:** Narwhal | 2025.1.3 (or later compatible versions)
+*   **Kotlin:** K2 compiler mode enabled
+
+While the project should build with other compatible Android Studio versions, these details are provided for reference. The primary source of truth for build configuration remains the Gradle files.
+
+---
 
 *(README will be updated as more steps are completed)*
     
