@@ -3,17 +3,13 @@ package com.betsson.interviewtest.data.test
 import com.betsson.interviewtest.data.dto.Bet
 import com.betsson.interviewtest.domain.model.OddType
 
+private const val HTTPS_I_IMGUR_COM_MX_66_SBD_JPEG = "https://i.imgur.com/mx66SBD.jpeg"
+
 // Test data helpers
 object DataSource {
-    fun createTestOdds() = Bet(
-        OddType.fromName("Winning team"),
-        10,
-        20,
-        "https://i.imgur.com/mx66SBD.jpeg"
-    ).mapBetToOdd()
 
     fun createOddsList() = listOf(
-        Bet(OddType.fromName("Winning team"), 10, 20, "https://i.imgur.com/mx66SBD.jpeg"),
+        Bet(OddType.fromName("Winning team"), 10, 20, HTTPS_I_IMGUR_COM_MX_66_SBD_JPEG),
         Bet(OddType.fromName("Total score"), 2, 0, "https://i.imgur.com/VnPRqcv.jpeg"),
         Bet(OddType.fromName("Player performance"), 5, 7, "https://i.imgur.com/Urpc00H.jpeg"),
         Bet(OddType.fromName("First goal scorer"), 0, 80, "https://i.imgur.com/Wy94Tt7.jpeg"),
@@ -26,11 +22,11 @@ object DataSource {
     }
 
     fun createTestInitialOddsList() = listOf(
-        Bet(OddType.fromName("Initial"), 5, 0, "https://i.imgur.com/mx66SBD.jpeg").mapBetToOdd()
+        Bet(OddType.fromName("Initial"), 5, 0, HTTPS_I_IMGUR_COM_MX_66_SBD_JPEG).mapBetToOdd()
     )
 
     fun createTestUpdatedOddsList() = listOf(
-        Bet(OddType.fromName("Updated"), 10, 20, "https://i.imgur.com/mx66SBD.jpeg").mapBetToOdd()
+        Bet(OddType.fromName("Updated"), 10, 20, HTTPS_I_IMGUR_COM_MX_66_SBD_JPEG).mapBetToOdd()
     )
 
     fun createTestProblematicOddsList() =

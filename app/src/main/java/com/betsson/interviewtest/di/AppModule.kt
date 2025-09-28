@@ -37,11 +37,11 @@ object AppModule { // Or use 'abstract class AppModule' if you have @Binds metho
 // Or you can have them in the same module if it's small.
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule { // Must be abstract for @Binds
+fun interface RepositoryModule {
 
     @Binds
     @Singleton // The scope here should generally match the scope of the concrete implementation
-    abstract fun bindOddsRepository(
+    fun bindOddsRepository(
         oddsRepositoryImpl: OddsRepositoryImpl
     ): OddsRepository
 }

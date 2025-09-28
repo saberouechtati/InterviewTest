@@ -19,14 +19,22 @@ data class OddItemUiModel(
 
 // Mapper function to convert a domain Odd model to a UI-friendly OddItemUiModel
 fun Odd.toOddItemUiModel(): OddItemUiModel {
-    if (this.imageUrl?.isEmpty() == true || this.imageUrl?.startsWith("http")?.not() == true) {
-        throw IllegalArgumentException("Invalid image URL: ${this.imageUrl}")
+    // Check if imageUrl is not null before trying to validate its content.
+    // Then check if it's empty or doesn't start with "http".
+    // The condition for require should be what we expect to be true for valid input.
+    val imageUrlIsValid = this.imageUrl != null &&
+            this.imageUrl.isNotEmpty() &&
+            this.imageUrl.startsWith("http")
+
+    require(imageUrlIsValid) {
+        "Invalid image URL: '${this.imageUrl}'. URL must not be null, not empty, and must start with 'http'."
     }
+
     return OddItemUiModel(
         id = this.id,
         name = this.name,
         sellInText = "Sell In: ${this.sellIn}",
         oddsValueText = "Odds: ${this.oddsValue}",
-        imageUrl = this.imageUrl
+        imageUrl = this.imageUrl // Safe due to the require block above ensuring it's not null and valid
     )
 }

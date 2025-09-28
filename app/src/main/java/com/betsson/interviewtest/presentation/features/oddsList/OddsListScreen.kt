@@ -32,7 +32,7 @@ import com.betsson.interviewtest.presentation.features.oddsList.components.OddIt
 
 private const val NETWORK_CONNECTION_FAILED = "Network connection failed"
 private const val UPDATE_ODDS = "Update Odds"
-private const val NO_ODDS_AVAILABLE_AT_THE_MOMENT_ = "No odds available at the moment."
+private const val NO_ODDS_AVAILABLE_AT_THE_MOMENT = "No odds available at the moment."
 
 @OptIn(ExperimentalMaterial3Api::class) // For TopAppBar
 @Composable
@@ -111,7 +111,7 @@ fun OddsListContent(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(NO_ODDS_AVAILABLE_AT_THE_MOMENT_)
+                    Text(NO_ODDS_AVAILABLE_AT_THE_MOMENT)
                 }
             }
 
@@ -144,11 +144,10 @@ fun OddsListContent(
     }
 }
 
-
 // Basic Preview for OddsListContent (can be expanded)
 @Preview(showBackground = true)
 @Composable
-fun OddsListContentPreview_Loading() {
+fun OddsListContentLoadingPreview() {
     MaterialTheme { // Wrap in a theme for preview
         OddsListContent(
             uiState = OddsListUiState(isLoading = true),
@@ -159,7 +158,7 @@ fun OddsListContentPreview_Loading() {
 
 @Preview(showBackground = true)
 @Composable
-fun OddsListContentPreview_Error() {
+fun OddsListContentErrorPreview() {
     MaterialTheme {
         OddsListContent(
             uiState = OddsListUiState(error = NETWORK_CONNECTION_FAILED),
@@ -170,7 +169,7 @@ fun OddsListContentPreview_Error() {
 
 @Preview(showBackground = true)
 @Composable
-fun OddsListContentPreview_Data() {
+fun OddsListContentDataPreview() {
     MaterialTheme {
         OddsListContent(
             uiState = OddsListUiState(

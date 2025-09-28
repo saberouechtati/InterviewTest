@@ -18,10 +18,8 @@ class TotalScoreStrategy : OddUpdateStrategy {
         newSellIn -= LogicConstants.STANDARD_SELL_IN_DECREASE
 
         // After sell date, quality increases even more
-        if (newSellIn < LogicConstants.SELL_IN_PASSED_THRESHOLD) {
-            if (newOddsValue < LogicConstants.MAX_ODDS_VALUE) {
-                newOddsValue += LogicConstants.TOTAL_SCORE_ODDS_INCREASE_WHEN_SELL_IN_PASSED
-            }
+        if (newSellIn < LogicConstants.SELL_IN_PASSED_THRESHOLD && newOddsValue < LogicConstants.MAX_ODDS_VALUE) {
+            newOddsValue += LogicConstants.TOTAL_SCORE_ODDS_INCREASE_WHEN_SELL_IN_PASSED
         }
 
         return odd.copy(sellIn = newSellIn, oddsValue = newOddsValue)

@@ -9,7 +9,27 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="de1fdae9-7250-4c5a-bed2-b4fc274baf23" name="Changes" comment="" />
+    <list default="true" id="de1fdae9-7250-4c5a-bed2-b4fc274baf23" name="Changes" comment="refactor(logic): Implement Strategy pattern for OddsLogicProcessor&#10;&#10;This commit refactors the core odds update mechanism by introducing&#10;the Strategy design pattern.&#10;&#10;Key changes include:&#10;- Created `OddUpdateStrategy` interface and specific strategy&#10;  implementations (`FirstGoalScorerStrategy`, `TotalScoreStrategy`,&#10;  `NumberOfFoulsStrategy`, `RegularBetStrategy`) to encapsulate&#10;  update rules for different odd types.&#10;- Introduced `OddUpdateStrategyFactory` to select the appropriate&#10;  strategy.&#10;- Modified `OddsLogicProcessor` to utilize the factory and delegate&#10;  update logic to the chosen strategy.&#10;- Updated `OddsLogicProcessor` and `OddUpdateStrategyFactory` to use&#10;  Hilt constructor injection.&#10;- Added `LogicModule.kt` to provide these components as singletons.&#10;- Extracted domain logic constants into `LogicConstants.kt`.&#10;&#10;This refactoring significantly improves:&#10;- Maintainability: Easier to understand and modify rules for&#10;  specific odd types.&#10;- Testability: Individual strategies and the factory can be&#10;  unit tested in isolation. `OddsLogicProcessor` is now more&#10;  testable with a mocked factory.&#10;- Extensibility: Simpler to add new odd types and their logic&#10;  in the future.&#10;- Adherence to SOLID principles (Single Responsibility, Open/Closed).">
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/OddUpdateStrategyFactoryTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/strategies/FirstGoalScorerStrategyTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/strategies/NumberOfFoulsStrategyTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/strategies/RegularBetStrategyTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/strategies/TotalScoreStrategyTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/domain/usecase/GetSortedOddsStreamUseCaseTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/domain/usecase/TriggerOddsUpdateUseCaseTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/OddUpdateStrategy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/OddUpdateStrategy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/strategies/RegularBetStrategy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/strategies/RegularBetStrategy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/strategies/TotalScoreStrategy.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/strategies/TotalScoreStrategy.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/test/DataSource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/test/DataSource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/di/AppModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/domain/model/Odd.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/domain/model/Odd.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/OddsLogicProcessorTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/OddsLogicProcessorTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +44,26 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="InterviewTest" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -31,8 +71,12 @@
         <option value="Kotlin Class" />
         <option value="Kotlin Object" />
         <option value="Kotlin File" />
+        <option value="Kotlin JUnit5 Test Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
@@ -45,17 +89,63 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Android App.app.executor": "Run",
+    "Gradle.AndroidInterviewTest-main [clean testDebugUnitTest findExecFiles jacocoUnitTestReport sonarWithCoverage].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [clean testDebugUnitTest jacocoUnitTestReport sonar].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [clean testDebugUnitTest jacocoUnitTestReport].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [clean testDebugUnitTest].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [findExecFiles].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [jacocoCombinedReport].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [jacocoUnitTestReport].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [sonar \\ \\ \\ \\].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [sonarWithCoverage].executor": "Run",
+    "Gradle.AndroidInterviewTest-main [sonar].executor": "Run",
+    "Gradle.GetSortedOddsStreamUseCaseTest.executor": "Run",
+    "Gradle.NumberOfFoulsStrategyTest.executor": "Run",
+    "Gradle.NumberOfFoulsStrategyTest.update - sellIn at secondary threshold - becomes below after decrease - odds increase by SPECIAL + ONE BONUS.executor": "Run",
     "Gradle.OddsLogicProcessorTest.executor": "Run",
+    "Gradle.Tests in 'InterviewTest.app.unitTest'.executor": "Coverage",
+    "Gradle.Tests in 'com.betsson.interviewtest'.executor": "Coverage",
+    "Gradle.TriggerOddsUpdateUseCaseTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "last_directory_selection": "/Users/saberouechtati-m3/Desktop/AndroidInterviewTest-main/app/src/test/java/com/betsson/interviewtest/domain/usecase",
     "last_opened_file_path": "/Users/saberouechtati-m3/Desktop/AndroidInterviewTest-main"
   }
 }]]></component>
-  <component name="RunManager" selected="Android App.app">
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.betsson.interviewtest.domain.usecase" />
+      <recent name="com.betsson.interviewtest.data.logic" />
+      <recent name="com.betsson.interviewtest.data.logic.strategies" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="gradle jacocoCombinedReport" />
+      <command value="gradle sonar \   -Dsonar.projectKey=Interview-Test \   -Dsonar.projectName='Interview Test' \   -Dsonar.host.url=http://localhost:9000 \   -Dsonar.token=sqp_1168884c11b0f20f79842df01d3c3a7800515e48" />
+      <command value="gradle sonar -Dsonar.projectKey=Interview-Test -Dsonar.projectName='Interview Test' -Dsonar.host.url=http://localhost:9000 -Dsonar.token=sqp_1168884c11b0f20f79842df01d3c3a7800515e48" />
+      <command value="gradle sonar" />
+      <command value="gradle clean testDebugUnitTest jacocoUnitTestReport sonar" />
+      <command value="gradle clean testDebugUnitTest jacocoUnitTestReport" />
+      <command value="gradle clean testDebugUnitTest jacocoUnitTestReport --info" />
+      <command value="gradle clean testDebugUnitTest" />
+      <command value="gradle findExecFiles" />
+      <command value="gradle jacocoUnitTestReport" />
+      <command value="gradle sonarWithCoverage" />
+      <command value="gradle clean testDebugUnitTest findExecFiles jacocoUnitTestReport sonarWithCoverage" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.AndroidInterviewTest-main [clean testDebugUnitTest findExecFiles jacocoUnitTestReport sonarWithCoverage]">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="InterviewTest.app" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
@@ -133,7 +223,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OddsLogicProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="AndroidInterviewTest-main [clean testDebugUnitTest findExecFiles jacocoUnitTestReport sonarWithCoverage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -144,22 +234,117 @@
         </option>
         <option name="taskNames">
           <list>
-            <option value=":app:testDebugUnitTest" />
-            <option value="--tests" />
-            <option value="&quot;com.betsson.interviewtest.data.logic.OddsLogicProcessorTest&quot;" />
+            <option value="clean" />
+            <option value="testDebugUnitTest" />
+            <option value="findExecFiles" />
+            <option value="jacocoUnitTestReport" />
+            <option value="sonarWithCoverage" />
           </list>
         </option>
         <option name="vmOptions" />
       </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="AndroidInterviewTest-main [clean testDebugUnitTest]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+            <option value="testDebugUnitTest" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="AndroidInterviewTest-main [findExecFiles]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="findExecFiles" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="AndroidInterviewTest-main [jacocoUnitTestReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jacocoUnitTestReport" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="AndroidInterviewTest-main [sonarWithCoverage]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="sonarWithCoverage" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.OddsLogicProcessorTest" />
+        <item itemvalue="Gradle.AndroidInterviewTest-main [clean testDebugUnitTest findExecFiles jacocoUnitTestReport sonarWithCoverage]" />
+        <item itemvalue="Gradle.AndroidInterviewTest-main [sonarWithCoverage]" />
+        <item itemvalue="Gradle.AndroidInterviewTest-main [jacocoUnitTestReport]" />
+        <item itemvalue="Gradle.AndroidInterviewTest-main [findExecFiles]" />
+        <item itemvalue="Gradle.AndroidInterviewTest-main [clean testDebugUnitTest]" />
       </list>
     </recent_temporary>
   </component>
@@ -171,6 +356,23 @@
       <option name="presentableId" value="Default" />
       <updated>1758785925267</updated>
     </task>
+    <task id="LOCAL-00001" summary="refactor(logic): Implement Strategy pattern for OddsLogicProcessor&#10;&#10;This commit refactors the core odds update mechanism by introducing&#10;the Strategy design pattern.&#10;&#10;Key changes include:&#10;- Created `OddUpdateStrategy` interface and specific strategy&#10;  implementations (`FirstGoalScorerStrategy`, `TotalScoreStrategy`,&#10;  `NumberOfFoulsStrategy`, `RegularBetStrategy`) to encapsulate&#10;  update rules for different odd types.&#10;- Introduced `OddUpdateStrategyFactory` to select the appropriate&#10;  strategy.&#10;- Modified `OddsLogicProcessor` to utilize the factory and delegate&#10;  update logic to the chosen strategy.&#10;- Updated `OddsLogicProcessor` and `OddUpdateStrategyFactory` to use&#10;  Hilt constructor injection.&#10;- Added `LogicModule.kt` to provide these components as singletons.&#10;- Extracted domain logic constants into `LogicConstants.kt`.&#10;&#10;This refactoring significantly improves:&#10;- Maintainability: Easier to understand and modify rules for&#10;  specific odd types.&#10;- Testability: Individual strategies and the factory can be&#10;  unit tested in isolation. `OddsLogicProcessor` is now more&#10;  testable with a mocked factory.&#10;- Extensibility: Simpler to add new odd types and their logic&#10;  in the future.&#10;- Adherence to SOLID principles (Single Responsibility, Open/Closed).">
+      <option name="closed" value="true" />
+      <created>1759072334423</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759072334423</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor(logic): Implement Strategy pattern for OddsLogicProcessor&#10;&#10;This commit refactors the core odds update mechanism by introducing&#10;the Strategy design pattern.&#10;&#10;Key changes include:&#10;- Created `OddUpdateStrategy` interface and specific strategy&#10;  implementations (`FirstGoalScorerStrategy`, `TotalScoreStrategy`,&#10;  `NumberOfFoulsStrategy`, `RegularBetStrategy`) to encapsulate&#10;  update rules for different odd types.&#10;- Introduced `OddUpdateStrategyFactory` to select the appropriate&#10;  strategy.&#10;- Modified `OddsLogicProcessor` to utilize the factory and delegate&#10;  update logic to the chosen strategy.&#10;- Updated `OddsLogicProcessor` and `OddUpdateStrategyFactory` to use&#10;  Hilt constructor injection.&#10;- Added `LogicModule.kt` to provide these components as singletons.&#10;- Extracted domain logic constants into `LogicConstants.kt`.&#10;&#10;This refactoring significantly improves:&#10;- Maintainability: Easier to understand and modify rules for&#10;  specific odd types.&#10;- Testability: Individual strategies and the factory can be&#10;  unit tested in isolation. `OddsLogicProcessor` is now more&#10;  testable with a mocked factory.&#10;- Extensibility: Simpler to add new odd types and their logic&#10;  in the future.&#10;- Adherence to SOLID principles (Single Responsibility, Open/Closed)." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(logic): Implement Strategy pattern for OddsLogicProcessor&#10;&#10;This commit refactors the core odds update mechanism by introducing&#10;the Strategy design pattern.&#10;&#10;Key changes include:&#10;- Created `OddUpdateStrategy` interface and specific strategy&#10;  implementations (`FirstGoalScorerStrategy`, `TotalScoreStrategy`,&#10;  `NumberOfFoulsStrategy`, `RegularBetStrategy`) to encapsulate&#10;  update rules for different odd types.&#10;- Introduced `OddUpdateStrategyFactory` to select the appropriate&#10;  strategy.&#10;- Modified `OddsLogicProcessor` to utilize the factory and delegate&#10;  update logic to the chosen strategy.&#10;- Updated `OddsLogicProcessor` and `OddUpdateStrategyFactory` to use&#10;  Hilt constructor injection.&#10;- Added `LogicModule.kt` to provide these components as singletons.&#10;- Extracted domain logic constants into `LogicConstants.kt`.&#10;&#10;This refactoring significantly improves:&#10;- Maintainability: Easier to understand and modify rules for&#10;  specific odd types.&#10;- Testability: Individual strategies and the factory can be&#10;  unit tested in isolation. `OddsLogicProcessor` is now more&#10;  testable with a mocked factory.&#10;- Extensibility: Simpler to add new odd types and their logic&#10;  in the future.&#10;- Adherence to SOLID principles (Single Responsibility, Open/Closed)." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/InterviewTest$Tests_in__com_betsson_interviewtest_.ic" NAME="Tests in 'com.betsson.interviewtest' Coverage Results" MODIFIED="1759076024179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/InterviewTest$Tests_in__InterviewTest_app_unitTest_.ic" NAME="Tests in 'InterviewTest.app.unitTest' Coverage Results" MODIFIED="1759078603577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
   </component>
 </project>

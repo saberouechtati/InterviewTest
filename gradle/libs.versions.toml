@@ -35,6 +35,7 @@ androidxArchCoreTesting = "2.2.0"
 junitVersion = "4.13.2"
 junitJupiter = "5.13.4"
 uiTestManifest = "1.9.1"
+junitJupiterVersion = "5.8.1"
 
 
 [libraries]
@@ -75,6 +76,7 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version = "3.7.0" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
 junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+jupiter-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiterVersion" }
 
 
 

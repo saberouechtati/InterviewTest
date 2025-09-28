@@ -432,7 +432,7 @@ After implementing the core features and writing unit and focused UI tests, this
     3.  **Centralized Constants:**
         *   Extracted all magic numbers and logic-related constants into a dedicated `LogicConstants.kt` object for better clarity and maintainability.
     4.  **Updated Hilt Modules:**
-        *   Ensured `OddUpdateStrategyFactory` and `OddsLogicProcessor` are injectable and optionally provided as singletons via a Hilt module (e.g., `LogicModule.kt`).
+        *   Ensured `OddUpdateStrategyFactory` and `OddsLogicProcessor` are injectable and optionally provided as singletons via a Hilt module.
 *   **Outcome:**
     *   Significantly enhanced separation of concerns for the odds update logic.
     *   Improved unit testability of individual update rules (each strategy can be tested in isolation).
@@ -441,6 +441,42 @@ After implementing the core features and writing unit and focused UI tests, this
 
 ---
 
+### Step 12: Integrate Code Coverage (JaCoCo) and Static Analysis (SonarQube)
+
+*   **Objective:** Implement tools to measure test coverage and perform static code analysis to identify potential bugs, vulnerabilities, and code smells, improving overall code quality.
+*   **Actions:**
+    1.  **JaCoCo Integration (Code Coverage):**
+        *   Added the JaCoCo Gradle plugin (`id 'jacoco'`) to the app-level `build.gradle.kts` and configured the `toolVersion`.
+        *   Configured JaCoCo agent properties for test execution within `tasks.withType<Test>()`, including `isIncludeNoLocationClasses = true` and excluding `jdk.internal.*`.
+        *   Created custom Gradle tasks:
+            *   `jacocoUnitTestReport`: Generates HTML and XML coverage reports from unit test (`testDebugUnitTest`) execution data (`.exec` files). Includes logic to handle scenarios where no execution data might initially be found to ensure report generation for SonarQube.
+            *   `jacocoAndroidTestReport`: Generates HTML and XML coverage reports from instrumented Android test (`connectedDebugAndroidTest`) execution data (`.ec` files).
+        *   Defined a comprehensive list of `jacocoExclusionPatterns` to filter out generated code (Hilt, Android resources, DataBinding, etc.), test classes themselves, and specific UI or non-logic packages from the coverage reports. This ensures that coverage metrics accurately reflect the application's core logic.
+        *   Enabled test coverage in the `debug` build type using `enableUnitTestCoverage = true` and `enableAndroidTestCoverage = true`.
+    2.  **SonarQube Integration (Static Analysis & Quality Dashboard):**
+        *   Added the SonarQube Gradle plugin (`id "org.sonarqube" version "5.0.0.4638"`) to the app-level `build.gradle.kts`.
+        *   Configured SonarQube properties within a `sonar {}` block in `app/build.gradle.kts`, including:
+            *   Project key, name, server URL (`http://localhost:9000`), and an authentication token.
+            *   Source and test directory paths, dynamically detected.
+            *   Binary (compiled class) paths.
+            *   Crucially, `sonar.coverage.jacoco.xmlReportPaths` was set to point to the XML output of the `jacocoUnitTestReport` task (`${layout.buildDirectory.get()}/reports/jacoco/jacocoUnitTestReport/jacocoUnitTestReport.xml`).
+            *   `sonar.coverage.exclusions` was configured using the same `jacocoExclusionPatterns` to maintain consistency between JaCoCo's view and SonarQube's view of covered code.
+            *   `sonar.junit.reportPaths` to include JUnit test results.
+    3.  **Analysis Execution & Workflow:**
+        *   Created a helper Gradle task `findExecFiles` for debugging JaCoCo execution data paths.
+        *   Created a composite Gradle task `sonarWithCoverage` that chains `clean`, `testDebugUnitTest`, `jacocoUnitTestReport`, and `sonar` to simplify the analysis process.
+        *   Executed the analysis using a command like: `./gradlew clean testDebugUnitTest findExecFiles jacocoUnitTestReport sonarWithCoverage`.
+    4.  **Review and Refinement:**
+        *   Reviewed the initial code coverage and static analysis reports on the SonarQube dashboard.
+        *   Addressed identified code smells, potential bugs, and areas with low unit test coverage as reported by SonarQube and indicated by JaCoCo.
+        *   Iteratively refined JaCoCo exclusion patterns and SonarQube configurations to improve the accuracy and relevance of the quality metrics.
+*   **Outcome:**
+    *   Automated measurement of unit test code coverage via JaCoCo, providing detailed HTML reports and XML data for SonarQube.
+    *   Continuous static analysis of the codebase via SonarQube, identifying potential issues, code smells, and security vulnerabilities early.
+    *   A centralized SonarQube dashboard for tracking key code quality metrics, technical debt, and coverage trends over time, facilitating ongoing quality improvements.
+    *   Increased confidence in code robustness, maintainability, and adherence to best practices.
+
+---
 ## Development Environment
 
 This project was primarily developed and tested using:
