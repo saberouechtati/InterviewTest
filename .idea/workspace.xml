@@ -4,52 +4,12 @@
     <shared>
       <config />
     </shared>
-    <layouts>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_launcher_background.xml">
-        <config>
-          <theme>@style/Theme.InterviewTest</theme>
-        </config>
-      </layout>
-    </layouts>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="88f428ce-93f4-409e-ac84-c9f4bac28212" name="Changes" comment="Refactor: Implement Clean Architecture for odds feature &amp; start Unit tests (Step 9)&#10;&#10;This commit refactors the odds display and update logic into a&#10;Clean Architecture structure (domain, data, presentation layers).&#10;It also introduces robust unit tests for the ViewModel and domain logic,&#10;improves test stability, and refines the odds processing logic.">
-      <change afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/betsson/interviewtest/presentation/features/oddsList/components/OddItemRowTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/dto/BetTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/repository/OddsRepositoryImplTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/AndroidProjectSystem.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/migrations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/InterviewTestApplication.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/InterviewTestApplication.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/dto/Bet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/dto/Bet.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/OddsLogicProcessor.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/logic/OddsLogicProcessor.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/repository/OddsRepositoryImpl.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/repository/OddsRepositoryImpl.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/test/TestData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/data/test/DataSource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/di/UseCaseModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/di/UseCaseModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/domain/model/Odd.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/domain/model/Odd.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/domain/model/OddType.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/domain/model/OddType.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListUiState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListUiState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/theme/Theme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/theme/Theme.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/theme/Type.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/betsson/interviewtest/presentation/theme/Type.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/OddsLogicProcessorTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/data/logic/OddsLogicProcessorTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListViewModelTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/betsson/interviewtest/presentation/features/oddsList/OddsListViewModelTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-    </list>
+    <list default="true" id="de1fdae9-7250-4c5a-bed2-b4fc274baf23" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,44 +24,20 @@
       <ProjectState />
     </projectState>
   </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="InterviewTest" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin Data Class" />
-        <option value="Kotlin File" />
         <option value="Kotlin Class" />
-        <option value="Kotlin JUnit5 Test Class" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin File" />
       </list>
     </option>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="333XDJO2xtEtV7H0qtNfCgdQprs" />
+  <component name="ProjectId" id="33BMHh8VixxksrZN2YKEpiC8B5y" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -109,67 +45,17 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Android App.app.executor": "Run",
-    "Android Instrumented Tests.All Tests.executor": "Run",
-    "Android Instrumented Tests.OddItemRowTest.executor": "Run",
-    "Android Instrumented Tests.OddsListScreenTest.executor": "Run",
-    "Android Instrumented Tests.minimalComposeHierarchyTest().executor": "Run",
-    "Gradle.AndroidInterviewTest-main [app:testDebugUnitTest].executor": "Run",
-    "Gradle.BetTest.executor": "Run",
-    "Gradle.OddsListViewModelTest.executor": "Run",
-    "Gradle.OddsListViewModelTest.onUpdateOddsClicked_sets_loading_calls_use_case_then_reflects_new_odds.executor": "Run",
-    "Gradle.OddsListViewModelTest.state reflects error when getSortedOddsStreamUseCase flow throws exception.executor": "Run",
-    "Gradle.OddsListViewModelTest.state_reflects_mapping_error_when_toOddItemUiModel_throws_exception.executor": "Run",
-    "Gradle.OddsListViewModelTest.viewModel_emits_error_state_when_mapping_fails.executor": "Run",
-    "Gradle.OddsLogicProcessorTest.executor": "Coverage",
-    "Gradle.OddsLogicProcessorTest.processOddsUpdate - firstGoalScorer - sellIn AND oddsValue DO NOT change.executor": "Run",
-    "Gradle.OddsLogicProcessorTest.processOddsUpdate - firstGoalScorer - when sellIn passed - sellIn AND oddsValue DO NOT change.executor": "Run",
-    "Gradle.OddsRepositoryImplTest.executor": "Run",
-    "Gradle.OddsRepositoryImplTest.init - loads initial data, maps, sorts, and emits to flow.executor": "Run",
-    "Gradle.Tests in 'InterviewTest.app.unitTest'.executor": "Coverage",
-    "Gradle.Upgrade Gradle wrapper.executor": "Run",
+    "Gradle.OddsLogicProcessorTest.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.readMode.enableVisualFormatting": "true",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
-    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
-    "git-widget-placeholder": "main",
-    "last_directory_selection": "/Users/saberouechtati-m3/Desktop/Test Feladat Betsson/AndroidInterviewTest-main/app/src/androidTest/java/com/betsson/interviewtest/presentation/features/oddsList",
-    "last_opened_file_path": "/Users/saberouechtati-m3/Desktop/Test Feladat Betsson/AndroidInterviewTest-main",
-    "settings.editor.selected.configurable": "memory.settings"
+    "last_opened_file_path": "/Users/saberouechtati-m3/Desktop/AndroidInterviewTest-main"
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="com.betsson.interviewtest.presentation.features.oddsList" />
-      <recent name="com.betsson.interviewtest.presentation.features.oddsList.components" />
-      <recent name="com.betsson.interviewtest.data.repository" />
-      <recent name="com.betsson.interviewtest.data.dto" />
-      <recent name="com.betsson.interviewtest.data.logic" />
-    </key>
-    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
-      <recent name="com.betsson.interviewtest.presentation" />
-      <recent name="com.betsson.interviewtest.presentation.ui" />
-      <recent name="com.betsson.interviewtest.presentation.factory" />
-      <recent name="com.betsson.interviewtest.data.dto" />
-      <recent name="com.betsson.interviewtest.presentation.oddslist" />
-    </key>
-  </component>
-  <component name="RunAnythingCache">
-    <option name="myCommands">
-      <command value="gradle app:testDebugUnitTest" />
-    </option>
-  </component>
-  <component name="RunManager" selected="Gradle.Tests in 'InterviewTest.app.unitTest'">
+  <component name="RunManager" selected="Android App.app">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="InterviewTest.app" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
@@ -242,198 +128,12 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All Tests" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
-      <module name="InterviewTest.app" />
-      <option name="ANDROID_TEST_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_NAME_REGEX" value="" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="EXTRA_OPTIONS" value="" />
-      <option name="RETENTION_ENABLED" value="No" />
-      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
-      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <option name="DEBUGGER_TYPE" value="Auto" />
-      <Auto>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Auto>
-      <Hybrid>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Hybrid>
-      <Java>
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Java>
-      <Native>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Native>
-      <Profilers>
-        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
-        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
-        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-      </Profilers>
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="OddItemRowTest" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
-      <module name="InterviewTest.app" />
-      <option name="ANDROID_TEST_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
-      <option name="TESTING_TYPE" value="2" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="com.betsson.interviewtest.presentation.features.oddsList.components.OddItemRowTest" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_NAME_REGEX" value="" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="EXTRA_OPTIONS" value="" />
-      <option name="RETENTION_ENABLED" value="No" />
-      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
-      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <option name="DEBUGGER_TYPE" value="Auto" />
-      <Auto>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Auto>
-      <Hybrid>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Hybrid>
-      <Java>
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Java>
-      <Native>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Native>
-      <Profilers>
-        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
-        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
-        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-      </Profilers>
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="minimalComposeHierarchyTest()" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests" temporary="true" nameIsGenerated="true">
-      <module name="InterviewTest.app" />
-      <option name="ANDROID_TEST_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
-      <option name="TESTING_TYPE" value="3" />
-      <option name="METHOD_NAME" value="minimalComposeHierarchyTest" />
-      <option name="CLASS_NAME" value="com.betsson.interviewtest.presentation.features.oddsList.components.OddItemRowTest" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_NAME_REGEX" value="" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="EXTRA_OPTIONS" value="" />
-      <option name="RETENTION_ENABLED" value="No" />
-      <option name="RETENTION_MAX_SNAPSHOTS" value="2" />
-      <option name="RETENTION_COMPRESS_SNAPSHOTS" value="false" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <option name="DEBUGGER_TYPE" value="Auto" />
-      <Auto>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Auto>
-      <Hybrid>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Hybrid>
-      <Java>
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Java>
-      <Native>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Native>
-      <Profilers>
-        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
-        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
-        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-      </Profilers>
-      <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="OddsListViewModelTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="OddsLogicProcessorTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -446,29 +146,7 @@
           <list>
             <option value=":app:testDebugUnitTest" />
             <option value="--tests" />
-            <option value="&quot;com.betsson.interviewtest.presentation.features.oddsList.OddsListViewModelTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tests in 'InterviewTest.app.unitTest'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":app:testDebugUnitTest" />
+            <option value="&quot;com.betsson.interviewtest.data.logic.OddsLogicProcessorTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -481,193 +159,18 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tests in 'InterviewTest.app.unitTest'" />
-        <item itemvalue="Android Instrumented Tests.All Tests" />
-        <item itemvalue="Android Instrumented Tests.OddItemRowTest" />
-        <item itemvalue="Android Instrumented Tests.minimalComposeHierarchyTest()" />
-        <item itemvalue="Gradle.OddsListViewModelTest" />
+        <item itemvalue="Gradle.OddsLogicProcessorTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="88f428ce-93f4-409e-ac84-c9f4bac28212" name="Changes" comment="" />
-      <created>1758546608982</created>
+      <changelist id="de1fdae9-7250-4c5a-bed2-b4fc274baf23" name="Changes" comment="" />
+      <created>1758785925267</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1758546608982</updated>
+      <updated>1758785925267</updated>
     </task>
-    <task id="LOCAL-00001" summary="Feat(Domain): Define Odd data class for core business logic">
-      <option name="closed" value="true" />
-      <created>1758637940164</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1758637940164</updated>
-    </task>
-    <task id="LOCAL-00002" summary="    Docs: Add initial README with project goals and progress up to Step 3">
-      <option name="closed" value="true" />
-      <created>1758641430714</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1758641430714</updated>
-    </task>
-    <task id="LOCAL-00003" summary="   Add kotlinx-coroutines-core library">
-      <option name="closed" value="true" />
-      <created>1758641509837</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1758641509837</updated>
-    </task>
-    <task id="LOCAL-00004" summary="   Fix README.md">
-      <option name="closed" value="true" />
-      <created>1758641779977</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1758641779977</updated>
-    </task>
-    <task id="LOCAL-00005" summary="  Refactor: Migrate Gradle build scripts to Kotlin DSL and update dependencies">
-      <option name="closed" value="true" />
-      <created>1758651472652</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1758651472653</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Docs: Detail build system refactoring in README">
-      <option name="closed" value="true" />
-      <created>1758651522615</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1758651522615</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Docs: Detail build system refactoring in README">
-      <option name="closed" value="true" />
-      <created>1758652296132</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1758652296132</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Docs: Enhance and complete Step 5 (ViewModel &amp; UI State) details in README">
-      <option name="closed" value="true" />
-      <created>1758653065506</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1758653065506</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Feat(Presentation): Implement Composable UI for OddsList with Coil for image loading">
-      <option name="closed" value="true" />
-      <created>1758656503722</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1758656503722</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Docs: Update README with details for Step 6 (Composable UI)">
-      <option name="closed" value="true" />
-      <created>1758656704973</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1758656704973</updated>
-    </task>
-    <task id="LOCAL-00011" summary="feat(App): Migrate to Jetpack Compose and Refactor Architecture&#10;&#10;This commit completes the migration of the main UI to Jetpack Compose&#10;and introduces significant architectural improvements based on Clean&#10;Architecture principles.&#10;&#10;Key changes include:&#10;&#10;UI Migration:&#10;- Removed legacy XML layouts (activity_main.xml, list_item.xml) and ItemAdapter.&#10;- MainActivity now uses setContent with Composable OddsListScreen.&#10;- Implemented OddsListScreen, OddItemRow, and related UI components in Compose.&#10;&#10;Architectural Refactoring:&#10;- Moved MainActivity to the presentation layer.&#10;- Restructured presentation layer into feature-based packages (e.g., presentation/features/oddsList).&#10;- Introduced Bet.java as a DTO in data/dto.&#10;- Implemented OddsListViewModel with OddsListViewModelFactory for proper instantiation.&#10;- Updated OddsRepositoryImpl for coroutine dispatchers and improved data flow.&#10;- Added Compose theme files (Color.kt, Theme.kt, Type.kt).&#10;&#10;Build &amp; Configuration:&#10;- Updated AndroidManifest.xml for INTERNET permission and  MainActivity's new location.&#10;- Modified build.gradle.kts for Compose dependencies and project setup.&#10;&#10;Debugging &amp; Stability:&#10;- Incorporated extensive logging across ViewModel, Repository, and MainActivity for debugging UI behavior.&#10;- Addressed deprecation of window.statusBarColor in Theme.kt using modern WindowCompat APIs.&#10;&#10;This refactoring aims to improve code maintainability, scalability,&#10;and adherence to modern Android development practices.">
-      <option name="closed" value="true" />
-      <created>1758668074070</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1758668074070</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Docs: Update README with details for Step 7 (Composable UI, Theming, System UI)">
-      <option name="closed" value="true" />
-      <created>1758669175160</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1758669175160</updated>
-    </task>
-    <task id="LOCAL-00013" summary="feat(DI): Integrate Hilt for dependency management&#10;&#10;Integrates Hilt for dependency injection across the application,&#10;replacing manual dependency creation and ViewModel factories.&#10;&#10;Key changes include:&#10;- Added Hilt dependencies to `build.gradle.kts` files and `libs.versions.toml`.&#10;- Created and annotated `InterviewTestApplication` with `@HiltAndroidApp`.&#10;- Updated `AndroidManifest.xml` to use the custom Application class.&#10;- Implemented Hilt modules:&#10;    - `AppModule`: Provides `OddsLogicProcessor`.&#10;    - `RepositoryModule`: Binds `OddsRepository` to `OddsRepositoryImpl`.&#10;    - `UseCaseModule`: Provides `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase`.&#10;    - `DispatchersModule`: Provides `CoroutineDispatcher`s (e.g., IoDispatcher, DefaultDispatcher).&#10;- Annotated `OddsListViewModel` with `@HiltViewModel` and injected dependencies via constructor.&#10;- Annotated `MainActivity` with `@AndroidEntryPoint` to enable ViewModel injection.&#10;- Updated relevant classes (`OddsRepositoryImpl`, use cases) with `@Inject` on constructors.&#10;- Removed `OddsListViewModelFactory` as it's no longer needed.&#10;&#10;This change improves code modularity, testability, and reduces boilerplate&#10;for dependency management.">
-      <option name="closed" value="true" />
-      <created>1758674025313</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1758674025313</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Docs: Update README with details for Step 8 (Implement Dependency Injection with Hilt)">
-      <option name="closed" value="true" />
-      <created>1758674328455</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1758674328455</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Refactor: Implement Clean Architecture for odds feature &amp; start Unit tests (Step 9)&#10;&#10;This commit refactors the odds display and update logic into a&#10;Clean Architecture structure (domain, data, presentation layers).&#10;It also introduces robust unit tests for the ViewModel and domain logic,&#10;improves test stability, and refines the odds processing logic.">
-      <option name="closed" value="true" />
-      <created>1758717325962</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1758717325962</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Feat(Domain): Define Odd data class for core business logic" />
-    <MESSAGE value="    Docs: Add initial README with project goals and progress up to Step 3" />
-    <MESSAGE value="   Add kotlinx-coroutines-core library" />
-    <MESSAGE value="   Fix README.md" />
-    <MESSAGE value="  Refactor: Migrate Gradle build scripts to Kotlin DSL and update dependencies" />
-    <MESSAGE value="Docs: Detail build system refactoring in README" />
-    <MESSAGE value="Docs: Enhance and complete Step 5 (ViewModel &amp; UI State) details in README" />
-    <MESSAGE value="Feat(Presentation): Implement Composable UI for OddsList with Coil for image loading" />
-    <MESSAGE value="Docs: Update README with details for Step 6 (Composable UI)" />
-    <MESSAGE value="feat(App): Migrate to Jetpack Compose and Refactor Architecture&#10;&#10;This commit completes the migration of the main UI to Jetpack Compose&#10;and introduces significant architectural improvements based on Clean&#10;Architecture principles.&#10;&#10;Key changes include:&#10;&#10;UI Migration:&#10;- Removed legacy XML layouts (activity_main.xml, list_item.xml) and ItemAdapter.&#10;- MainActivity now uses setContent with Composable OddsListScreen.&#10;- Implemented OddsListScreen, OddItemRow, and related UI components in Compose.&#10;&#10;Architectural Refactoring:&#10;- Moved MainActivity to the presentation layer.&#10;- Restructured presentation layer into feature-based packages (e.g., presentation/features/oddsList).&#10;- Introduced Bet.java as a DTO in data/dto.&#10;- Implemented OddsListViewModel with OddsListViewModelFactory for proper instantiation.&#10;- Updated OddsRepositoryImpl for coroutine dispatchers and improved data flow.&#10;- Added Compose theme files (Color.kt, Theme.kt, Type.kt).&#10;&#10;Build &amp; Configuration:&#10;- Updated AndroidManifest.xml for INTERNET permission and  MainActivity's new location.&#10;- Modified build.gradle.kts for Compose dependencies and project setup.&#10;&#10;Debugging &amp; Stability:&#10;- Incorporated extensive logging across ViewModel, Repository, and MainActivity for debugging UI behavior.&#10;- Addressed deprecation of window.statusBarColor in Theme.kt using modern WindowCompat APIs.&#10;&#10;This refactoring aims to improve code maintainability, scalability,&#10;and adherence to modern Android development practices." />
-    <MESSAGE value="Docs: Update README with details for Step 7 (Composable UI, Theming, System UI)" />
-    <MESSAGE value="feat(DI): Integrate Hilt for dependency management&#10;&#10;Integrates Hilt for dependency injection across the application,&#10;replacing manual dependency creation and ViewModel factories.&#10;&#10;Key changes include:&#10;- Added Hilt dependencies to `build.gradle.kts` files and `libs.versions.toml`.&#10;- Created and annotated `InterviewTestApplication` with `@HiltAndroidApp`.&#10;- Updated `AndroidManifest.xml` to use the custom Application class.&#10;- Implemented Hilt modules:&#10;    - `AppModule`: Provides `OddsLogicProcessor`.&#10;    - `RepositoryModule`: Binds `OddsRepository` to `OddsRepositoryImpl`.&#10;    - `UseCaseModule`: Provides `GetSortedOddsStreamUseCase` and `TriggerOddsUpdateUseCase`.&#10;    - `DispatchersModule`: Provides `CoroutineDispatcher`s (e.g., IoDispatcher, DefaultDispatcher).&#10;- Annotated `OddsListViewModel` with `@HiltViewModel` and injected dependencies via constructor.&#10;- Annotated `MainActivity` with `@AndroidEntryPoint` to enable ViewModel injection.&#10;- Updated relevant classes (`OddsRepositoryImpl`, use cases) with `@Inject` on constructors.&#10;- Removed `OddsListViewModelFactory` as it's no longer needed.&#10;&#10;This change improves code modularity, testability, and reduces boilerplate&#10;for dependency management." />
-    <MESSAGE value="Docs: Update README with details for Step 8 (Implement Dependency Injection with Hilt)" />
-    <MESSAGE value="Refactor: Implement Clean Architecture for odds feature &amp; start Unit tests (Step 9)&#10;&#10;This commit refactors the odds display and update logic into a&#10;Clean Architecture structure (domain, data, presentation layers).&#10;It also introduces robust unit tests for the ViewModel and domain logic,&#10;improves test stability, and refines the odds processing logic." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor: Implement Clean Architecture for odds feature &amp; start Unit tests (Step 9)&#10;&#10;This commit refactors the odds display and update logic into a&#10;Clean Architecture structure (domain, data, presentation layers).&#10;It also introduces robust unit tests for the ViewModel and domain logic,&#10;improves test stability, and refines the odds processing logic." />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/InterviewTest$OddsLogicProcessorTest.ic" NAME="OddsLogicProcessorTest Coverage Results" MODIFIED="1758722953722" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/InterviewTest$Tests_in__InterviewTest_app_unitTest_.ic" NAME="Tests in 'InterviewTest.app.unitTest' Coverage Results" MODIFIED="1758782882657" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/InterviewTest$OddsRepositoryImplTest.ic" NAME="OddsRepositoryImplTest Coverage Results" MODIFIED="1758727981237" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-    <SUITE FILE_PATH="coverage/InterviewTest$OddsListViewModelTest.ic" NAME="OddsListViewModelTest Coverage Results" MODIFIED="1758713082829" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
-  </component>
-  <component name="play_dynamic_filters_status">
-    <option name="appIdToCheckInfo">
-      <map>
-        <entry key="com.betsson.interviewtest">
-          <value>
-            <CheckInfo lastCheckTimestamp="1758637212434" />
-          </value>
-        </entry>
-        <entry key="com.betsson.interviewtest.test">
-          <value>
-            <CheckInfo lastCheckTimestamp="1758637212434" />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>

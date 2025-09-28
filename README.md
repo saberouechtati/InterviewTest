@@ -418,6 +418,29 @@ After implementing the core features and writing unit and focused UI tests, this
 
 ---
 
+### Step 11: Refactor Core Logic with Strategy Pattern & DI
+
+*   **Objective:** Improve the maintainability, testability, and scalability of the odds update logic.
+*   **Actions:**
+    1.  **Implemented the Strategy Design Pattern:**
+        *   Created an `OddUpdateStrategy` interface.
+        *   Developed individual strategy classes for each odd type (e.g., `FirstGoalScorerStrategy`, `TotalScoreStrategy`, `NumberOfFoulsStrategy`, `RegularBetStrategy`), each encapsulating its specific update rules.
+        *   Introduced an `OddUpdateStrategyFactory` to create the appropriate strategy for a given odd.
+    2.  **Refactored `OddsLogicProcessor`:**
+        *   The processor now delegates the update logic to the strategy returned by the factory.
+        *   It receives the `OddUpdateStrategyFactory` via constructor injection using Hilt.
+    3.  **Centralized Constants:**
+        *   Extracted all magic numbers and logic-related constants into a dedicated `LogicConstants.kt` object for better clarity and maintainability.
+    4.  **Updated Hilt Modules:**
+        *   Ensured `OddUpdateStrategyFactory` and `OddsLogicProcessor` are injectable and optionally provided as singletons via a Hilt module (e.g., `LogicModule.kt`).
+*   **Outcome:**
+    *   Significantly enhanced separation of concerns for the odds update logic.
+    *   Improved unit testability of individual update rules (each strategy can be tested in isolation).
+    *   Made the system more extensible for adding new odd types and their corresponding update rules in the future.
+    *   Aligned the core logic components with Dependency Injection best practices using Hilt.
+
+---
+
 ## Development Environment
 
 This project was primarily developed and tested using:

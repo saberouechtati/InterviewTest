@@ -1,5 +1,6 @@
 package com.betsson.interviewtest.di
 
+import com.betsson.interviewtest.data.logic.OddUpdateStrategyFactory
 import com.betsson.interviewtest.data.logic.OddsLogicProcessor
 import com.betsson.interviewtest.data.repository.OddsRepositoryImpl
 import com.betsson.interviewtest.domain.repository.OddsRepository
@@ -15,11 +16,18 @@ import javax.inject.Singleton
 object AppModule { // Or use 'abstract class AppModule' if you have @Binds methods
 
     @Provides
-    @Singleton // Ensures a single instance of OddsLogicProcessor throughout the app
-    fun provideOddsLogicProcessor(): OddsLogicProcessor {
-        return OddsLogicProcessor()
+    @Singleton
+    fun provideOddUpdateStrategyFactory(): OddUpdateStrategyFactory {
+        return OddUpdateStrategyFactory()
     }
 
+    @Provides
+    @Singleton // Ensures a single instance of OddsLogicProcessor throughout the app
+    fun provideOddsLogicProcessor(
+        strategyFactory: OddUpdateStrategyFactory
+    ): OddsLogicProcessor {
+        return OddsLogicProcessor(strategyFactory)
+    }
     // If OddsRepositoryImpl takes OddsLogicProcessor in its constructor,
     // and OddsLogicProcessor is provided by Hilt (as above), Hilt can create OddsRepositoryImpl.
     // We then just need to tell Hilt what implementation to use for the OddsRepository interface.
